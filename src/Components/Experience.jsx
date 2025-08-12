@@ -1,15 +1,16 @@
 import React from 'react'
 import TextGlobal from '../Globals/TextGlobal'
 import './Experience.module.scss'
+import Bubbles from './Bubbles'
+import Floor from '../Blocks/Floor'
+import InstancedShapes from '../Globals/InstancedShapes'
 const Experience = () => {
  
   return (
  <>
    <TextGlobal text={"Aquarium"} size={1} />
-   <mesh position={[0,-1,0]} receiveShadow>
-    <boxGeometry args={[9,0.5,5]} />
-    <meshStandardMaterial/>
-   </mesh>
+   <Floor/>
+   <Bubbles/>
  </>
 
   )

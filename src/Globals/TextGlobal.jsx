@@ -25,7 +25,7 @@ const TextGlobal = ({
             font="./fonts/optimer_bold.typeface.json"
             size={size}
             height={0.2}
-            curveSegments={12}
+            curveSegments={4}
             bevelEnabled
             bevelThickness={0.02}
             bevelSize={0.02}  
