@@ -1,6 +1,6 @@
 // BubbleConfig.js
 import * as THREE from 'three';
-import InstancedShapes from '../Globals/InstancedShapes';
+import InstancedShapes from '../../Globals/InstancedShapes';
 
 export const bubbleGeometry = new THREE.SphereGeometry(0.1, 16, 16);
 

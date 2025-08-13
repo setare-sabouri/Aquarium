@@ -1,29 +1,32 @@
 import { Canvas } from 'react-three-fiber'
-
-import './styles.scss'
-import Experience from './Components/Experience';
-import { Environment, OrbitControls } from '@react-three/drei';
-import Lights from './Globals/Lights';
+import {  KeyboardControls, OrbitControls } from '@react-three/drei';
 import { Perf } from 'r3f-perf'
+import Experience from './Components/Experience';
+import './styles.scss'
+import { KeyMaps } from './Globals/KeyMaps';
+
 
 function App() {
   return (
+    <KeyboardControls map={KeyMaps}>
     <Canvas
       shadows
       camera={{
         fov: 45,
         near: 0.1,
-        far: 200,
-        position: [0, 3, 9]
+        far: 2000,
+        position: [0, 7, 40]
       }}
     >
+     
       <color args={["dodgerblue"]} attach={"background"} />
       <OrbitControls />
-      <Lights />
       <Experience />
       <axesHelper args={[7]} />
       <Perf position="top-left" />
     </Canvas>
+    {/* <Interface/> */}
+     </KeyboardControls>
   );
 }
 

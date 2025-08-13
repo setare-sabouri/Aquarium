@@ -1,17 +1,23 @@
-import React from 'react'
+import { Physics } from '@react-three/rapier'
 import TextGlobal from '../Globals/TextGlobal'
+import Bubbles from './AquariumInside/Bubbles'
+import Floor from './AquariumInside/Floor'
+import Lights from '../Globals/Lights'
 import './Experience.module.scss'
-import Bubbles from './Bubbles'
-import Floor from '../Blocks/Floor'
-import InstancedShapes from '../Globals/InstancedShapes'
+import Tunnel from './AquariumInside/Tunnel'
+import Player from './Player/Player'
+import AquariumInside from './AquariumInside/AquariumInside'
+
 const Experience = () => {
- 
+
   return (
- <>
-   <TextGlobal text={"Aquarium"} size={1} />
-   <Floor/>
-   <Bubbles/>
- </>
+
+      <Physics debug>
+        <Lights />
+        <AquariumInside/>
+        <TextGlobal text={"Aquarium"} size={1} position={[-2,18,0]} />
+        <Player/>
+      </Physics>
 
   )
 }
