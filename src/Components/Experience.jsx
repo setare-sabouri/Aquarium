@@ -1,23 +1,24 @@
+import React from 'react'
 import { Physics } from '@react-three/rapier'
 import TextGlobal from '../Globals/TextGlobal'
-import Bubbles from './AquariumInside/Bubbles'
-import Floor from './AquariumInside/Floor'
 import Lights from '../Globals/Lights'
-import './Experience.module.scss'
-import Tunnel from './AquariumInside/Tunnel'
 import Player from './Player/Player'
 import AquariumInside from './AquariumInside/AquariumInside'
-
+import AquariumOutside from './AquariumOutside.jsx/AquariumOutside.jsx'
+import ThirdPersonCamera from '../Globals/ThirdPersonCamera.jsx'
+import './Experience.module.scss'
+import * as THREE from 'three';
 const Experience = () => {
-
+  const playerRef = React.useRef();
   return (
-
-      <Physics debug>
-        <Lights />
-        <AquariumInside/>
-        <TextGlobal text={"Aquarium"} size={1} position={[-2,18,0]} />
-        <Player/>
-      </Physics>
+    <Physics >
+      <Lights />
+      <AquariumInside />
+      <AquariumOutside />
+      <TextGlobal text={"Aquarium"} size={1} position={[-2, 18, 0]} />
+      <Player ref={playerRef} />
+      {/* <ThirdPersonCamera playerRef={playerRef} offset={new THREE.Vector3(0, 5, 10)} /> */}
+    </Physics>
 
   )
 }

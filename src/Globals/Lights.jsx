@@ -8,7 +8,7 @@ const Lights = () => {
     return (
         <>
             <ambientLight  intensity={0.5} />
-            <directionalLight castShadow ref={DirectionalLight} position={[2, 3, 5]} intensity={1} />
+            <directionalLight castShadow ref={DirectionalLight} position={[2, 2, 5]} intensity={10} lookAt={[5,5,5]}/>
         </>
     )
 }

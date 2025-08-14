@@ -7,8 +7,8 @@ import Bubble from './Bubbles'
 const AquariumInside = () => {
     return (
         <>
-            <Tunnel />
-            <Floor />
+            <Tunnel length={30}/>
+            <Floor length={30} />
             <Bubble />
         </>
     )
