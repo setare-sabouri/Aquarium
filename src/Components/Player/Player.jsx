@@ -1,9 +1,8 @@
-// src/Models/Player.jsx
 import React, { useRef } from "react";
 import { RigidBody } from "@react-three/rapier";
 import { useKeyboardControls } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
-// src/Models/Player.jsx
+
 const Player = React.forwardRef((props, ref) => {
   const [, getKeys] = useKeyboardControls();
 
@@ -21,7 +20,7 @@ const Player = React.forwardRef((props, ref) => {
   });
 
   return (
-    <RigidBody ref={ref} position={[0, 1, -2]} colliders="ball" friction={1}>
+    <RigidBody ref={ref} position={[0, 1, -4.5]} colliders="ball" friction={1}>
       <mesh>
         <sphereGeometry args={[1]} />
         <meshStandardMaterial color="orange" />

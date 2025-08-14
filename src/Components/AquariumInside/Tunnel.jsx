@@ -6,7 +6,7 @@ import { useFrame } from '@react-three/fiber';
 const Tunnel = ({ length }) => {
   const meshRef = useRef();
 
-  // Load normal map
+  // Load normal map - ro in 3 khate paein bayad kar koni 
   const normalMap = new THREE.TextureLoader().load('./images/4141-normal.jpg');
   normalMap.wrapS = normalMap.wrapT = THREE.RepeatWrapping;
   normalMap.repeat.set(5, 20); // repeat along width (circumference) and height
@@ -30,15 +30,13 @@ const Tunnel = ({ length }) => {
         ref={meshRef}
         rotation={[Math.PI / 2, Math.PI / 2, 0]}
       >
-        {/* Increased heightSegments to 64 for better normal mapping */}
-        <cylinderGeometry
-          args={[10, 10, length*2, 64, 64, false, 0, Math.PI]}
-        />
+
+        <cylinderGeometry args={[10, 10, length*2, 20, 1, false, 0, Math.PI]}/>
         <meshStandardMaterial
           side={THREE.BackSide}
           color="#1b4d6b"
           transparent
-          opacity={0.6}
+          opacity={0.5}
           roughness={0.1}
           metalness={0.8}
           normalMap={normalMap}

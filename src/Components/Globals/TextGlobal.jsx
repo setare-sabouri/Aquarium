@@ -1,25 +1,17 @@
 
-import { Text3D,Float } from "@react-three/drei";
+import { Text3D, Float } from "@react-three/drei";
 import { Center } from '@react-three/drei';
 import * as THREE from 'three'
 const TextGlobal = ({
   text,
   size,
   position = [0, 0, 0],
-  onClick,
-  onPointerOver,
-  onPointerOut
 }) => {
 
 
   return (
     <group position={position} >
-      <Float
-        speed={1.7}
-        floatIntensity={1}
-        rotationIntensity={1.3}
-        floatRange={[0.5, 0.5]}
-      >
+      <Float speed={2} rotationIntensity={2}>
         <Center>
           <Text3D
             font="./fonts/optimer_bold.typeface.json"
@@ -28,16 +20,12 @@ const TextGlobal = ({
             curveSegments={4}
             bevelEnabled
             bevelThickness={0.02}
-            bevelSize={0.02}  
+            bevelSize={0.02}
             bevelOffset={0}
             bevelSegments={5}
-            onClick={onClick}
-            onPointerOver={onPointerOver}
-            onPointerOut={onPointerOut}
-            castShadow
           >
             {text}
-             <meshToonMaterial color="blue" /> 
+            <meshToonMaterial color="blue" />
           </Text3D>
         </Center>
       </Float>
