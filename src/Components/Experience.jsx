@@ -16,7 +16,7 @@ const Experience = () => {
       <AquariumInside />
       <AquariumOutside />
       <Player ref={playerRef} />
-      <ThirdPersonCamera playerRef={playerRef} offset={new THREE.Vector3(0, 2, 10)} />
+      <ThirdPersonCamera playerRef={playerRef} offset={new THREE.Vector3(0, 4, 18)} />
     </Physics>
 
   )

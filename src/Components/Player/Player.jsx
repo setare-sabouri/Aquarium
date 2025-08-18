@@ -20,7 +20,7 @@ const Player = React.forwardRef((props, ref) => {
   });
 
   return (
-    <RigidBody ref={ref} position={[0, 1, -4.5]} colliders="ball" friction={1}>
+    <RigidBody ref={ref} position={[0, 1, -10]} colliders="ball" friction={1}>
       <mesh>
         <sphereGeometry args={[1]} />
         <meshStandardMaterial color="orange" />
