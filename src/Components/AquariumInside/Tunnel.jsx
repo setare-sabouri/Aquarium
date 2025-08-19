@@ -9,7 +9,7 @@ const Tunnel = ({ length }) => {
   const meshRef = useRef();
   
   // Load normal map
-  const normalMap = new THREE.TextureLoader().load('./images/4141-normal.jpg');
+  const normalMap = new THREE.TextureLoader().load('./textures/water/4141-normal.jpg');
   normalMap.wrapS = normalMap.wrapT = THREE.RepeatWrapping;
   normalMap.repeat.set(repeatX, repeatY);
 
