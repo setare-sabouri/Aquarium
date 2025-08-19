@@ -16,7 +16,7 @@ const Floor = ({ length }) => {
     "/textures/sand/Sand_ambientOcclusio.jpg"
   ]);
 
-    // Repeat tiling so it doesn’t stretch
+ 
     useMemo(() => {
       [colorMap, normalMap, heightMap, aoMap].forEach((tex) => {
         if (tex) {
