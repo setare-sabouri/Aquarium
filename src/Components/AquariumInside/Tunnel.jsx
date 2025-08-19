@@ -42,6 +42,7 @@ const Tunnel = ({ length }) => {
           normalMap={normalMap}
           normalScale={new THREE.Vector2(normalScale, normalScale)}
         />
+
       </mesh>
     </RigidBody>
   );

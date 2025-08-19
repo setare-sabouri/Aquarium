@@ -1,5 +1,5 @@
 import { Canvas } from 'react-three-fiber'
-import { KeyboardControls, OrbitControls } from '@react-three/drei';
+import { KeyboardControls } from '@react-three/drei';
 import { Perf } from 'r3f-perf'
 import Experience from './Components/Experience';
 import './styles.scss'
@@ -21,14 +21,13 @@ function App() {
 
         <color args={["dodgerblue"]} attach={"background"} />
         <Experience />
-
-        {/* <OrbitControls /> */}
         <axesHelper args={[7]} />
         <Perf position="top-left" />
 
       </Canvas>
       {/* <Interface/> */}
     </KeyboardControls>
+    
   );
 }
 
