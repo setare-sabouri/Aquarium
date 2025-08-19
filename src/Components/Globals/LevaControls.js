@@ -1,8 +1,7 @@
 import { useControls } from 'leva';
 
 export function useLevaControls() {
-  return useControls("Tunnel Material", {
-    wireframe: false,
+  const TunnelMaterials=useControls("Tunnel Material", {
     opacity: { value: 0.4, min: 0, max: 1, step: 0.05 },
     roughness: { value: 0.5, min: 0, max: 1, step: 0.05 },
     metalness: { value: 0.1, min: 0, max: 1, step: 0.05 },
@@ -14,7 +13,20 @@ export function useLevaControls() {
   },
     {
       collapsed: true,
+      color:"gold"
     }
   );
+
+  const Scene =useControls("Scene Setting",{
+    BackGround :"dodgerblue",
+    Performance:false
+  },
+  {
+    collapsed:true,
+    color:"aquamarine"
+  }
+)
+
+  return {TunnelMaterials, Scene}
 
 }

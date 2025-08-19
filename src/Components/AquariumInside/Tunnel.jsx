@@ -5,19 +5,19 @@ import { useFrame } from '@react-three/fiber';
 import { useLevaControls } from '../Globals/LevaControls';
 
 const Tunnel = ({ length }) => {
-  const { wireframe, opacity, roughness, metalness, color, speed, normalScale, repeatX, repeatY } = useLevaControls();
-  const meshRef = useRef();
+  const{TunnelMaterials} =useLevaControls();
+  const TunnelRef = useRef();
   
   // Load normal map
   const normalMap = new THREE.TextureLoader().load('./textures/water/4141-normal.jpg');
   normalMap.wrapS = normalMap.wrapT = THREE.RepeatWrapping;
-  normalMap.repeat.set(repeatX, repeatY);
+  normalMap.repeat.set(TunnelMaterials.repeatX, TunnelMaterials.repeatY);
 
   useFrame(({ clock }) => {
-    if (meshRef.current) {
+    if (TunnelRef.current) {
       // Different speeds on X/Y to get a wavy feel
-      normalMap.offset.x = clock.elapsedTime * speed * 0.2;
-      normalMap.offset.y = clock.elapsedTime * speed * 0.6;
+      normalMap.offset.x = clock.elapsedTime * TunnelMaterials.speed * 0.2;
+      normalMap.offset.y = clock.elapsedTime * TunnelMaterials.speed * 0.6;
     }
   });
 
@@ -29,18 +29,17 @@ const Tunnel = ({ length }) => {
       restitution={0.2}
       friction={1}
     >
-      <mesh ref={meshRef} rotation={[Math.PI / 2, Math.PI / 2, 0]}>
+      <mesh ref={TunnelRef} rotation={[Math.PI / 2, Math.PI / 2, 0]}>
         <cylinderGeometry args={[10, 10, length * 2, 40, 1, false, 0, Math.PI]} />
         <meshStandardMaterial
-          wireframe={wireframe}
           side={THREE.BackSide}
-          color={color}
+          color={TunnelMaterials.color}
           transparent
-          opacity={opacity}
-          roughness={roughness}
-          metalness={metalness}
+          opacity={TunnelMaterials.opacity}
+          roughness={TunnelMaterials.roughness}
+          metalness={TunnelMaterials.metalness}
           normalMap={normalMap}
-          normalScale={new THREE.Vector2(normalScale, normalScale)}
+          normalScale={new THREE.Vector2(TunnelMaterials.normalScale, TunnelMaterials.normalScale)}
         />
 
       </mesh>

@@ -5,9 +5,12 @@ import Experience from './Components/Experience';
 import './styles.scss'
 import { KeyMaps } from './Components/Globals/KeyMaps';
 import Interface from './Components/Interface/Interface';
+import { useLevaControls } from './Components/Globals/LevaControls';
 
 
 function App() {
+  const {Scene} = useLevaControls();
+
   return (
     <KeyboardControls map={KeyMaps}>
       <Canvas
@@ -19,10 +22,11 @@ function App() {
           position: [0, 6, 20]
         }}
       >
-        <color args={["dodgerblue"]} attach={"background"} />
+        <color args={[Scene.BackGround]} attach={"background"} />
         <Experience />
         <axesHelper args={[7]} />
-        <Perf position="top-left" />
+        {/* <Perf position="top-left" /> */}
+        {Scene.Performance && <Perf position="top-left" />}
       </Canvas>
       <Interface/>
     </KeyboardControls>
