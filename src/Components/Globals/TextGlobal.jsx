@@ -1,16 +1,12 @@
-
 import { Text3D, Float } from "@react-three/drei";
 import { Center } from '@react-three/drei';
-import * as THREE from 'three'
-const TextGlobal = ({
-  text,
-  size,
-  position = [0, 0, 0],
-}) => {
+
+
+const TextGlobal = ({ text, size, position = [0, 0, 0],rotation=[0,0,0] }) => {
 
 
   return (
-    <group position={position} >
+    <group position={position} rotation={rotation}>
       <Float speed={2} rotationIntensity={2}>
         <Center>
           <Text3D
@@ -25,7 +21,7 @@ const TextGlobal = ({
             bevelSegments={5}
           >
             {text}
-            <meshToonMaterial color="blue" />
+            <meshToonMaterial color="#316394" />
           </Text3D>
         </Center>
       </Float>

@@ -38,7 +38,7 @@ const Floor = ({ length }) => {
 
       {/* Sand plane */}
       <mesh position={[0, 0, -length]} rotation={[-Math.PI / 2, 0, 0]} receiveShadow>
-        <planeGeometry args={[20, length * 2, 100, 100]} />
+        <planeGeometry args={[20.9, length * 2, 100, 100]} />
         <meshStandardMaterial
           map={colorMap}
           normalMap={normalMap}
