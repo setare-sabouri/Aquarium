@@ -7,9 +7,10 @@ export function useLevaControls() {
     metalness: { value: 0.1, min: 0, max: 1, step: 0.05 },
     color: "#fff",
     speed: { value: 0.04, min: 0, max: 0.3, step: 0.01 },
-    normalScale: { value: 1, min: 0, max: 5, step: 0.1 },
+    normalScale: { value: 2, min: 0, max: 10, step: 1 },
     repeatX: { value: 2, min: 1, max: 10, step: 1 },
     repeatY: { value: 4, min: 1, max: 10, step: 1 },
+    displacementScale:{ value: 0.7, min: 0.5, max: 1, step: 0.1 },
   },
     {
       collapsed: true,

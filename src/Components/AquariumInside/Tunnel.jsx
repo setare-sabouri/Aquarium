@@ -1,20 +1,21 @@
 import { RigidBody } from '@react-three/rapier';
 import { useRef } from 'react';
 import * as THREE from 'three';
-import { useFrame } from '@react-three/fiber';
+import { useFrame, useLoader } from '@react-three/fiber';
 import { useLevaControls } from '../Globals/LevaControls';
 
 const Tunnel = ({ length }) => {
   const { TunnelMaterials } = useLevaControls();
   const TunnelRef = useRef();
 
-  // Load textures
-  const loader = new THREE.TextureLoader();
-  const colorMap = loader.load('./textures/Water/color.jpg');
-  const dispMap = loader.load('./textures/Water/DISP.png');
-  const normalMap = loader.load('./textures/Water/NOR.jpg');
-  const occMap = loader.load('./textures/Water/OCC.jpg');
-  const specMap = loader.load('./textures/Water/SPEC.jpg');
+  // Load textures using useLoader
+  const [colorMap, dispMap, normalMap, occMap, specMap] = useLoader(THREE.TextureLoader, [
+    './textures/Water/color.jpg',
+    './textures/Water/DISP.png',
+    './textures/Water/NOR.jpg',
+    './textures/Water/OCC.jpg',
+    './textures/Water/SPEC.jpg',
+  ]);
 
   // Apply wrapping & repeat
   [colorMap, dispMap, normalMap, occMap, specMap].forEach((map) => {
@@ -41,7 +42,7 @@ const Tunnel = ({ length }) => {
       friction={1}
     >
       <mesh ref={TunnelRef} rotation={[Math.PI / 2, Math.PI / 2, 0]}>
-        <cylinderGeometry args={[10, 10, (length * 2 )-1, 128, 64, false, 0, Math.PI]} />
+        <cylinderGeometry args={[10, 10, (length * 2) - 1, 128, 64, true, 0, Math.PI]} />
         <meshStandardMaterial
           transparent
           side={THREE.BackSide}

@@ -4,12 +4,7 @@ import * as THREE from "three";
 import { useLoader } from "@react-three/fiber";
 
 const Floor = ({ length }) => {
-  const [
-  colorMap,
-    normalMap,
-    heightMap,
-    aoMap,
-  ] = useLoader(THREE.TextureLoader, [
+  const [colorMap,normalMap,heightMap,aoMap,] = useLoader(THREE.TextureLoader, [
     "/textures/sand/Sand_baseColor.jpg",
     "/textures/sand/Sand_normal.jpg",
     "/textures/sand/Sand_height.png",
