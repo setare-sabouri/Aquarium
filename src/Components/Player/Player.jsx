@@ -2,6 +2,7 @@ import React, { useRef } from "react";
 import { RigidBody } from "@react-three/rapier";
 import { useKeyboardControls } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
+import Shark from "./Shark";
 
 const Player = React.forwardRef((props, ref) => {
   const [, getKeys] = useKeyboardControls();
@@ -39,6 +40,7 @@ const Player = React.forwardRef((props, ref) => {
         <sphereGeometry args={[1]} />
         <meshStandardMaterial color="orange" />
       </mesh>
+      {/* <Shark /> */}
     </RigidBody>
   );
 });

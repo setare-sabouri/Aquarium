@@ -38,6 +38,25 @@ export default function ThirdPersonCamera({ playerRef, offset = [0, 5, 10] }) {
     return () => document.removeEventListener('mousemove', handleMouseMove);
   }, [ctrlPressed]);
 
+
+  // code below to have wider look , outside Aquarium
+  // useFrame(() => {
+  //   if (!playerRef.current) return;
+  //   const pos = playerRef.current.translation();
+
+  //   const offsetVec = new THREE.Vector3(...offset);
+  //   offsetVec.applyAxisAngle(new THREE.Vector3(1, 0, 0), rotation.current.pitch);
+  //   offsetVec.applyAxisAngle(new THREE.Vector3(0, 1, 0), rotation.current.yaw);
+
+  //   const camX = pos.x + offsetVec.x;
+  //   const camY = Math.max(pos.y + offsetVec.y, 0);
+  //   const camZ = pos.z + offsetVec.z;
+
+  //   camera.position.set(camX, camY, camZ);
+  //   camera.lookAt(pos.x, pos.y + 1, pos.z);
+  // });
+
+
   useFrame(() => {
     if (!playerRef.current) return;
     const pos = playerRef.current.translation();
@@ -46,13 +65,37 @@ export default function ThirdPersonCamera({ playerRef, offset = [0, 5, 10] }) {
     offsetVec.applyAxisAngle(new THREE.Vector3(1, 0, 0), rotation.current.pitch);
     offsetVec.applyAxisAngle(new THREE.Vector3(0, 1, 0), rotation.current.yaw);
 
-    const camX = pos.x + offsetVec.x;
-    const camY = Math.max(pos.y + offsetVec.y, 0);
-    const camZ = pos.z + offsetVec.z;
+    // Clamp Y so camera never goes below floor
+    const floorHeight = 0;
+    const camMinHeight = floorHeight + 0.5;
+    let camY = Math.max(pos.y + offsetVec.y, camMinHeight);
+
+    let camX = pos.x + offsetVec.x;
+    let camZ = pos.z + offsetVec.z;
+
+    // === Clamp camera inside tunnel ===
+    const tunnelRadius = 10; // match cylinder radius
+    const tunnelLength = 100; // match tunnel length
+
+    // Clamp Z (along tunnel)
+    camZ = Math.min(-1, Math.max(-tunnelLength, camZ)); // tunnel goes from 0 to -length
+
+    // Clamp radial distance from center
+    const radial = Math.sqrt(camX * camX + camY * camY);
+    if (radial > tunnelRadius - 0.1) { // 0.1 buffer
+      const angle = Math.atan2(camY, camX);
+      camX = (tunnelRadius - 0.1) * Math.cos(angle);
+      camY = (tunnelRadius - 0.1) * Math.sin(angle);
+
+      // Ensure camY still above floor after radial clamp
+      camY = Math.max(camY, camMinHeight);
+    }
 
     camera.position.set(camX, camY, camZ);
     camera.lookAt(pos.x, pos.y + 1, pos.z);
   });
+
+
 
   return null;
 }
