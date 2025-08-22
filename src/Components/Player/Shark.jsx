@@ -1,5 +1,5 @@
 import { useGLTF, useAnimations } from '@react-three/drei'
-import { CapsuleCollider, CuboidCollider, CylinderCollider } from '@react-three/rapier';
+import { CapsuleCollider } from '@react-three/rapier';
 import { useEffect, useRef } from 'react'
 
 const Shark = () => {

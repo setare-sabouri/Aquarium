@@ -2,8 +2,9 @@ import React from "react";
 import { RigidBody } from "@react-three/rapier";
 import { useKeyboardControls } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
-import Shark from "./Shark";
 import { useLevaControls } from '../Globals/LevaControls'
+import Shark from "./Shark";
+
 const Player = React.forwardRef((_, PlayerRef) => {
   const { Player } = useLevaControls();
   const [, getKeys] = useKeyboardControls();
@@ -20,6 +21,7 @@ const Player = React.forwardRef((_, PlayerRef) => {
     if (left) Impulse.x -= Player.speed;
     if (right) Impulse.x += Player.speed;
     if (jump) Impulse.y += Player.jumpStrength;
+    
     if (Impulse.x || Impulse.y || Impulse.z) {
       PlayerRef.current.applyImpulse(Impulse, true);
     }
@@ -34,7 +36,7 @@ const Player = React.forwardRef((_, PlayerRef) => {
       linearDamping={4}
       angularDamping={1}  // prevents spinning
       colliders={false}
-      enabledRotations={[false, false, false]} // allow only Y-axis rotation
+      enabledRotations={[false,false,false]}
     >
       <Shark />
     </RigidBody>

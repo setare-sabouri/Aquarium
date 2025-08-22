@@ -31,7 +31,12 @@ export function useLevaControls() {
   const Player = useControls("Player", {
     speed: { value: 10, min: 5, max: 20, step: 1 },
     jumpStrength:{value:9,min:5,max:20,step:1}
-  }
+  },
+     {
+      collapsed: true,
+      color: "mintcream"
+    }
+  
   )
 
 

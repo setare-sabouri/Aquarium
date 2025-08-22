@@ -6,6 +6,7 @@ import Experience from './Components/Experience';
 import { KeyMaps } from './Components/Globals/KeyMaps';
 import Interface from './Components/Interface/Interface';
 import { useLevaControls } from './Components/Globals/LevaControls';
+import { Leva } from 'leva';
 
 
 function App() {
@@ -26,6 +27,7 @@ function App() {
         {Scene.Performance && <Perf position="top-left" />}
         <Experience />
       </Canvas>
+      <Leva collapsed/>
       <Interface />
     </KeyboardControls>
 
