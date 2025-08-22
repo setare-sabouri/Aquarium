@@ -29,7 +29,8 @@ export function useLevaControls() {
   )
 
   const Player = useControls("Player", {
-    speed: { value: 0.01, min: 0.01, max: 0.1, step: 0.001 },
+    speed: { value: 10, min: 5, max: 20, step: 1 },
+    jumpStrength:{value:9,min:5,max:20,step:1}
   }
   )
 

@@ -10,20 +10,18 @@ const Player = React.forwardRef((_, PlayerRef) => {
 
   useFrame(() => {
     if (!PlayerRef.current) return;
+
     const { forward, backward, left, right, jump } = getKeys();
+    const Impulse = { x: 0, y: 0, z: 0 };
 
 
-    const impulse = { x: 0, y: 0, z: 0 };
-    const jumpStrength = 0.02;
-
-    if (forward) impulse.z -= Player.speed;
-    if (backward) impulse.z += Player.speed;
-    if (left) impulse.x -= Player.speed;
-    if (right) impulse.x += Player.speed;
-    if (jump) impulse.y += jumpStrength;
-
-    if (impulse.x || impulse.y || impulse.z) {
-      PlayerRef.current.applyImpulse(impulse, true);
+    if (forward) Impulse.z -= Player.speed;
+    if (backward) Impulse.z += Player.speed;
+    if (left) Impulse.x -= Player.speed;
+    if (right) Impulse.x += Player.speed;
+    if (jump) Impulse.y += Player.jumpStrength;
+    if (Impulse.x || Impulse.y || Impulse.z) {
+      PlayerRef.current.applyImpulse(Impulse, true);
     }
   });
 
@@ -32,12 +30,11 @@ const Player = React.forwardRef((_, PlayerRef) => {
       ref={PlayerRef}
       position={[0, 3, -10]}
       rotation={[0, Math.PI, 0]}
-      gravityScale={0.04}
-      colliders="trimesh"
-      friction={1}
-      linearDamping={0.6}
-      angularDamping={0.8}  // prevents spinning
-
+      gravityScale={0.2}
+      linearDamping={4}
+      angularDamping={1}  // prevents spinning
+      colliders={false}
+      enabledRotations={[false, false, false]} // allow only Y-axis rotation
     >
       <Shark />
     </RigidBody>
