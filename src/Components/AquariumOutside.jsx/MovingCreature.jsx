@@ -1,18 +1,26 @@
 import { useAnimations, useGLTF } from '@react-three/drei'
 import { RigidBody } from '@react-three/rapier'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { useFrame } from '@react-three/fiber'
+import { SkeletonUtils } from 'three-stdlib'
 
-const Turtle = ({ position = [0, 0, 0], rotation = [0, 0, 0] }) => {
-  const Turtle = useGLTF("./models/Turtle.glb")
+const MovingCreature = ({
+  modelPath,
+  position = [0, 0, 0],
+  rotation = [0, 0, 0],
+  scale = 1,
+  speed = 0.05,
+  turnSpeed = 5,
+  zRange = [-180, -20], 
+}) => {
+  const gltf = useGLTF(modelPath)
   const groupRef = useRef()
   const rigidRef = useRef()
-  const { actions, names } = useAnimations(Turtle.animations, groupRef)
+  const { actions, names } = useAnimations(gltf.animations, groupRef)
+    const clonedScene = useMemo(() => SkeletonUtils.clone(gltf.scene), [gltf.scene])
+  
   const [direction, setDirection] = useState(1)
-  const [targetRotation, setTargetRotation] = useState(0) 
-  const speed = 0.05
-  const turnSpeed = 5
-
+  const [targetRotation, setTargetRotation] = useState(0)
 
   useEffect(() => {
     if (actions[names[0]]) {
@@ -25,11 +33,11 @@ const Turtle = ({ position = [0, 0, 0], rotation = [0, 0, 0] }) => {
     const t = rigidRef.current.translation()
 
     // Flip direction and set target rotation
-    if (t.z <= -180 && direction === 1) { 
+    if (t.z <= zRange[0] && direction === 1) {
       setDirection(-1)
       setTargetRotation(Math.PI)
     }
-    if (t.z >= -20 && direction === -1) {
+    if (t.z >= zRange[1] && direction === -1) {
       setDirection(1)
       setTargetRotation(0)
     }
@@ -55,9 +63,9 @@ const Turtle = ({ position = [0, 0, 0], rotation = [0, 0, 0] }) => {
       position={position}
       rotation={rotation}
     >
-      <primitive object={Turtle.scene} scale={2} ref={groupRef} />
+      <primitive object={clonedScene} scale={scale} ref={groupRef} />
     </RigidBody>
   )
 }
 
-export default Turtle
+export default MovingCreature

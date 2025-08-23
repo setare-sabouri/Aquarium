@@ -1,34 +1,40 @@
-import React from "react";
-import { RigidBody } from "@react-three/rapier";
+import React, { useState } from "react";
 import { useKeyboardControls } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
-import { useLevaControls } from '../Globals/LevaControls'
-import Shark from "./Shark";
+import { useLevaControls } from '../Globals/LevaControls';
+import Diver from "./Diver";
 
 const Player = React.forwardRef((_, PlayerRef) => {
   const { Player } = useLevaControls();
   const [, getKeys] = useKeyboardControls();
+  const [targetRotationY, setTargetRotationY] = useState(0); 
 
-  useFrame(() => {
+
+  useFrame((_, delta) => {
     if (!PlayerRef.current) return;
 
     const { forward, backward, left, right, jump } = getKeys();
     const Impulse = { x: 0, y: 0, z: 0 };
-
-
-    if (forward) Impulse.z -= Player.speed;
-    if (backward) Impulse.z += Player.speed;
+  
+    if (forward) {
+      Impulse.z -= Player.speed;
+      setTargetRotationY(0); 
+    }
+    if (backward) {
+      Impulse.z += Player.speed;
+      setTargetRotationY(Math.PI); 
+    }
     if (left) Impulse.x -= Player.speed;
     if (right) Impulse.x += Player.speed;
     if (jump) Impulse.y += Player.jumpStrength;
-    
+
     if (Impulse.x || Impulse.y || Impulse.z) {
       PlayerRef.current.applyImpulse(Impulse, true);
     }
   });
 
   return (
-      <Shark playerRef={PlayerRef}/>
+    <Diver playerRef={PlayerRef} targetRotationY={targetRotationY}  />
   );
 });
 
