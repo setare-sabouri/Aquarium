@@ -11,7 +11,7 @@ import ThirdPersonCamera from './Globals/ThirdPersonCamera.jsx'
 const Experience = () => {
   const playerRef = React.useRef();
   return (
-    <Physics debug >
+    <Physics >
       <Lights />
       <AquariumInside />
       <AquariumOutside />

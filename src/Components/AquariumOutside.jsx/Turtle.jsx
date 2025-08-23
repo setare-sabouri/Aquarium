@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react'
 import { useFrame } from '@react-three/fiber'
 
 const Turtle = ({ position = [0, 0, 0], rotation = [0, 0, 0] }) => {
-  const Turtle = useGLTF("./models/T.glb")
+  const Turtle = useGLTF("./models/Turtle.glb")
   const groupRef = useRef()
   const rigidRef = useRef()
   const { actions, names } = useAnimations(Turtle.animations, groupRef)
