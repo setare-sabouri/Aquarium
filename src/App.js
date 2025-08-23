@@ -7,6 +7,7 @@ import { KeyMaps } from './Components/Globals/KeyMaps';
 import Interface from './Components/Interface/Interface';
 import { useLevaControls } from './Components/Globals/LevaControls';
 import { Leva } from 'leva';
+import BackgroundAudio from './Components/Globals/Sound';
 
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
       </Canvas>
       <Leva collapsed/>
       <Interface />
+      <BackgroundAudio/>
     </KeyboardControls>
 
   );
