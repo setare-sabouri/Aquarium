@@ -42,7 +42,7 @@ const Tunnel = ({ length }) => {
       friction={1}
     >
       <mesh ref={TunnelRef} rotation={[Math.PI / 2, Math.PI / 2, 0]}>
-        <cylinderGeometry args={[10, 10, (length * 2) - 1, 128, 64, true, 0, Math.PI]} />
+        <cylinderGeometry args={[10, 10, (length * 2) - 1, 128, 64, false, 0, Math.PI]} />
         <meshStandardMaterial
           transparent
           side={THREE.BackSide}

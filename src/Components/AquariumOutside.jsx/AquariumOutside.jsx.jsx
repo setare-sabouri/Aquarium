@@ -9,7 +9,7 @@ const AquariumOutside = () => {
     <>
       <Fishes scene={fish.scene} animations={fish.animations} position={[20, 1, -40]} />
       <Fishes scene={fish.scene} animations={fish.animations} position={[-11, 10, -70]} />
-      <Fishes scene={fish.scene} animations={fish.animations} position={[-20, 1, -150]} />
+      <Fishes scene={fish.scene} animations={fish.animations} position={[-22, 1, -150]} />
       <Fishes scene={fish.scene} animations={fish.animations} position={[20, 1, -200]} />
       <MovingCreature
         modelPath="./models/Turtle.glb"

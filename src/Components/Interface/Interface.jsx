@@ -3,7 +3,7 @@ import styles from "./Interface.module.scss"
 const Interface = () => {
   return (
     <div className={styles.Interface}>
-      <p>Hold Ctrl to rotate</p>
+      <p>Rotate : Hold Ctrl</p>
     </div>
   )
 }
