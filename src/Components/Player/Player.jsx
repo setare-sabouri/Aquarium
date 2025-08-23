@@ -28,18 +28,7 @@ const Player = React.forwardRef((_, PlayerRef) => {
   });
 
   return (
-    <RigidBody
-      ref={PlayerRef}
-      position={[0, 3, -10]}
-      rotation={[0, Math.PI, 0]}
-      gravityScale={0.2}
-      linearDamping={4}
-      angularDamping={1}  // prevents spinning
-      colliders={false}
-      enabledRotations={[false,false,false]}
-    >
-      <Shark />
-    </RigidBody>
+      <Shark playerRef={PlayerRef}/>
   );
 });
 
