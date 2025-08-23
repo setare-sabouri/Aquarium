@@ -16,7 +16,7 @@ export const bubbleMaterial = new THREE.MeshStandardMaterial({
 const Bubble = ({ position }) => {
     return (
         <group position={position}>
-            <InstancedShapes count={40} geometry={bubbleGeometry} material={bubbleMaterial} range={{ x: 10, y: 6, z: 6 }} /> // only one call
+            <InstancedShapes count={40} geometry={bubbleGeometry} material={bubbleMaterial} range={{ x: 5, y: 5, z: 6 }} /> // only one call
         </group>
     )
 }
