@@ -2,7 +2,7 @@ import { useFrame, useThree } from '@react-three/fiber';
 import React, { useRef, useEffect, useState } from 'react';
 import * as THREE from 'three';
 
-export default function ThirdPersonCamera({ playerRef, offset = [0, 5, 10] }) {
+export default function ThirdPersonCamera({ playerRef, offset = [0, 5, 10] ,length}) {
   const { camera } = useThree();
   const rotation = useRef({ yaw: 0, pitch: 0 });
   const [ctrlPressed, setCtrlPressed] = useState(false);
@@ -73,9 +73,9 @@ export default function ThirdPersonCamera({ playerRef, offset = [0, 5, 10] }) {
     let camX = pos.x + offsetVec.x;
     let camZ = pos.z + offsetVec.z;
 
-    // === Clamp camera inside tunnel ===
-    const tunnelRadius = 10; // match cylinder radius
-    const tunnelLength = 100; // match tunnel length
+    //Clamp camera inside tunnel
+    const tunnelRadius = 10; 
+    const tunnelLength = length+60; 
 
     // Clamp Z (along tunnel)
     camZ = Math.min(-1, Math.max(-tunnelLength, camZ)); // tunnel goes from 0 to -length
