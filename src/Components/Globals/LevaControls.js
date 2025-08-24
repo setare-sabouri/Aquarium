@@ -20,7 +20,7 @@ export function useLevaControls() {
 
   const Scene = useControls("Scene Setting", {
     BackGround: "dodgerblue",
-    Performance: false
+    Performance: true
   },
     {
       collapsed: true,

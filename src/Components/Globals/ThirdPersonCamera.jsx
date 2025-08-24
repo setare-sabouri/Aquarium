@@ -2,19 +2,17 @@ import { useFrame, useThree } from '@react-three/fiber';
 import React, { useRef, useEffect, useState } from 'react';
 import * as THREE from 'three';
 
-export default function ThirdPersonCamera({ playerRef, offset = [0, 5, 10] ,length}) {
+export default function ThirdPersonCamera({ playerRef, offset = [0, 5, 10], length = 100 }) {
   const { camera } = useThree();
   const rotation = useRef({ yaw: 0, pitch: 0 });
   const [ctrlPressed, setCtrlPressed] = useState(false);
+  const offsetVec = useRef(new THREE.Vector3(...offset));
+  const tempVec = useRef(new THREE.Vector3());
 
   // Track CTRL key
   useEffect(() => {
-    const handleKeyDown = (e) => {
-      if (e.key === "Control") setCtrlPressed(true);
-    };
-    const handleKeyUp = (e) => {
-      if (e.key === "Control") setCtrlPressed(false);
-    };
+    const handleKeyDown = (e) => e.key === "Control" && setCtrlPressed(true);
+    const handleKeyUp = (e) => e.key === "Control" && setCtrlPressed(false);
 
     window.addEventListener('keydown', handleKeyDown);
     window.addEventListener('keyup', handleKeyUp);
@@ -24,10 +22,10 @@ export default function ThirdPersonCamera({ playerRef, offset = [0, 5, 10] ,leng
     };
   }, []);
 
-  // Mouse movement
+  // Mouse rotation
   useEffect(() => {
     const handleMouseMove = (e) => {
-      if (!ctrlPressed) return; // rotate only if CTRL is pressed
+      if (!ctrlPressed) return;
       const sensitivity = 0.002;
       rotation.current.yaw -= e.movementX * sensitivity;
       rotation.current.pitch -= e.movementY * sensitivity;
@@ -38,64 +36,35 @@ export default function ThirdPersonCamera({ playerRef, offset = [0, 5, 10] ,leng
     return () => document.removeEventListener('mousemove', handleMouseMove);
   }, [ctrlPressed]);
 
-
-  // code below to have wider look , outside Aquarium
-  // useFrame(() => {
-  //   if (!playerRef.current) return;
-  //   const pos = playerRef.current.translation();
-
-  //   const offsetVec = new THREE.Vector3(...offset);
-  //   offsetVec.applyAxisAngle(new THREE.Vector3(1, 0, 0), rotation.current.pitch);
-  //   offsetVec.applyAxisAngle(new THREE.Vector3(0, 1, 0), rotation.current.yaw);
-
-  //   const camX = pos.x + offsetVec.x;
-  //   const camY = Math.max(pos.y + offsetVec.y, 0);
-  //   const camZ = pos.z + offsetVec.z;
-
-  //   camera.position.set(camX, camY, camZ);
-  //   camera.lookAt(pos.x, pos.y + 1, pos.z);
-  // });
-
-
   useFrame(() => {
-    if (!playerRef.current) return;
+    if (!playerRef?.current) return;
     const pos = playerRef.current.translation();
 
-    const offsetVec = new THREE.Vector3(...offset);
-    offsetVec.applyAxisAngle(new THREE.Vector3(1, 0, 0), rotation.current.pitch);
-    offsetVec.applyAxisAngle(new THREE.Vector3(0, 1, 0), rotation.current.yaw);
+    // Apply rotation to offsetVec
+    tempVec.current.copy(offsetVec.current);
+    tempVec.current.applyAxisAngle(new THREE.Vector3(1, 0, 0), rotation.current.pitch);
+    tempVec.current.applyAxisAngle(new THREE.Vector3(0, 1, 0), rotation.current.yaw);
 
-    // Clamp Y so camera never goes below floor
-    const floorHeight = 0;
-    const camMinHeight = floorHeight + 0.5;
-    let camY = Math.max(pos.y + offsetVec.y, camMinHeight);
+    let camX = pos.x + tempVec.current.x;
+    let camY = Math.max(pos.y + tempVec.current.y, 0.5); // floor clamp
+    let camZ = pos.z + tempVec.current.z;
 
-    let camX = pos.x + offsetVec.x;
-    let camZ = pos.z + offsetVec.z;
+    // Clamp Z inside tunnel
+    const tunnelRadius = 10;
+    const tunnelLength = length + 60;
+    camZ = Math.min(-1, Math.max(-tunnelLength, camZ));
 
-    //Clamp camera inside tunnel
-    const tunnelRadius = 10; 
-    const tunnelLength = length+60; 
-
-    // Clamp Z (along tunnel)
-    camZ = Math.min(-1, Math.max(-tunnelLength, camZ)); // tunnel goes from 0 to -length
-
-    // Clamp radial distance from center
+    // Clamp radial distance
     const radial = Math.sqrt(camX * camX + camY * camY);
-    if (radial > tunnelRadius - 0.1) { // 0.1 buffer
+    if (radial > tunnelRadius - 0.1) {
       const angle = Math.atan2(camY, camX);
       camX = (tunnelRadius - 0.1) * Math.cos(angle);
-      camY = (tunnelRadius - 0.1) * Math.sin(angle);
-
-      // Ensure camY still above floor after radial clamp
-      camY = Math.max(camY, camMinHeight);
+      camY = Math.max((tunnelRadius - 0.1) * Math.sin(angle), 0.5);
     }
 
     camera.position.set(camX, camY, camZ);
     camera.lookAt(pos.x, pos.y + 1, pos.z);
   });
-
-
 
   return null;
 }

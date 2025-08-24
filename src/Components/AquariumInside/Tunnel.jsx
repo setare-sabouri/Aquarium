@@ -1,14 +1,13 @@
 import { RigidBody } from '@react-three/rapier';
-import { useRef } from 'react';
+import { useRef, useMemo } from 'react';
 import * as THREE from 'three';
 import { useFrame, useLoader } from '@react-three/fiber';
 import { useLevaControls } from '../Globals/LevaControls';
 
 const Tunnel = ({ length }) => {
   const { TunnelMaterials } = useLevaControls();
-  const TunnelRef = useRef();
+  const tunnelRef = useRef();
 
-  // Load textures using useLoader
   const [colorMap, dispMap, normalMap, occMap, specMap] = useLoader(THREE.TextureLoader, [
     './textures/Water/color.jpg',
     './textures/Water/DISP.png',
@@ -17,15 +16,16 @@ const Tunnel = ({ length }) => {
     './textures/Water/SPEC.jpg',
   ]);
 
-  // Apply wrapping & repeat
-  [colorMap, dispMap, normalMap, occMap, specMap].forEach((map) => {
-    map.wrapS = map.wrapT = THREE.RepeatWrapping;
-    map.repeat.set(TunnelMaterials.repeatX, TunnelMaterials.repeatY);
-  });
+  // Memoize texture setup
+  useMemo(() => {
+    [colorMap, dispMap, normalMap, occMap, specMap].forEach((map) => {
+      map.wrapS = map.wrapT = THREE.RepeatWrapping;
+      map.repeat.set(TunnelMaterials.repeatX, TunnelMaterials.repeatY);
+    });
+  }, [TunnelMaterials.repeatX, TunnelMaterials.repeatY, colorMap, dispMap, normalMap, occMap, specMap]);
 
-  // Animate textures for flow
   useFrame(({ clock }) => {
-    if (TunnelRef.current) {
+    if (TunnelMaterials.speed > 0 && tunnelRef.current) {
       const t = clock.elapsedTime * TunnelMaterials.speed;
       normalMap.offset.set(t * 0.2, t * 0.6);
       dispMap.offset.set(t * 0.15, t * 0.25);
@@ -41,8 +41,8 @@ const Tunnel = ({ length }) => {
       restitution={0.2}
       friction={1}
     >
-      <mesh ref={TunnelRef} rotation={[Math.PI / 2, Math.PI / 2, 0]}>
-        <cylinderGeometry args={[10, 10, (length * 2) - 1, 128, 64, false, 0, Math.PI]} />
+      <mesh ref={tunnelRef} rotation={[Math.PI / 2, Math.PI / 2, 0]}>
+        <cylinderGeometry args={[10, 10, length * 2 - 1, 64, 32, false, 0, Math.PI]} />
         <meshStandardMaterial
           transparent
           side={THREE.BackSide}
