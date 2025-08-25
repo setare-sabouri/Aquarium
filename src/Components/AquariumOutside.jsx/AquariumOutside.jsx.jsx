@@ -12,7 +12,7 @@ const AquariumOutside = () => {
       <Fishes scene={fish.scene} animations={fish.animations} position={[-20, 1, -150]} />
       <Fishes scene={fish.scene} animations={fish.animations} position={[20, 1, -200]} />
       <MovingCreature
-        modelPath="./models/Turtle.glb"
+        modelPath="./models/turtle.glb"
         position={[12, 4, -100]}
         rotation={[0, Math.PI, Math.PI/4]}
         scale={2}
