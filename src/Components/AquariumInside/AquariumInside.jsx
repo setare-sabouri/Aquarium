@@ -22,7 +22,7 @@ const AquariumInside = () => {
       <TextGlobal text="AQ Tunnel" size={0.9} position={textPosition} rotation={[0, 0.5, 0]} />
       <Tunnel length={100} />
       <Floor length={100} />
-      <Bubble position={bubblePosition} />
+      {/* <Bubble position={bubblePosition} /> */}
       <Rocks {...rockRanges} />
     </>
   );
