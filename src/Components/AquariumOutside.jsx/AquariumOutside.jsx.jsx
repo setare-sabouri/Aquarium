@@ -15,7 +15,7 @@ const AquariumOutside = () => {
 
   const movingCreatures = useMemo(() => [
     {
-      modelPath: "./models/Turtle.glb",
+      modelPath: "./models/turtle.glb",
       position: [12, 4, -100],
       rotation: [0, Math.PI, Math.PI / 4],
       scale: 2,
