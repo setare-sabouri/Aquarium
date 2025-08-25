@@ -13,7 +13,6 @@ const Rocks = ({
 }) => {
   const { scene: rockScene } = useGLTF('./models/rock.glb');
 
-  // Random number generator
   const randomInRange = useCallback((min, max) => Math.random() * (max - min) + min, []);
 
   // Memoize size calculation
