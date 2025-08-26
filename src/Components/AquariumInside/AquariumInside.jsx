@@ -6,16 +6,9 @@ import TextGlobal from '../Globals/TextGlobal';
 import Rocks from './Rock';
 
 const AquariumInside = () => {
-  // Memoized props to prevent unnecessary re-renders
   const textPosition = useMemo(() => [-5, 5, -15], []);
   const bubblePosition = useMemo(() => [-5, 0, -45], []);
-  const rockRanges = useMemo(() => ({
-    count: 10,
-    xRange: [-9, 9],
-    yRange: [0.3, 0.5],
-    zRange: [-5, -200],
-    scaleRange: [0.04, 0.17],
-  }), []);
+  const rockRanges = useMemo(() => ({count: 10,xRange: [-8.5, 8.5],yRange: [0.3, 0.4],zRange: [-10, -205],scaleRange: [0.09, 0.15],}), []);
 
   return (
     <>
