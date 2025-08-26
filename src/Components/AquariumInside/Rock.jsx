@@ -36,7 +36,7 @@ const Rocks = ({
         randomInRange(zRange[0], zRange[1]),
       ];
       const radius = baseRadius * scale;
-      const colliderY = radius - 0.7;
+      const colliderY = radius - 0.5;
       return { position, scale, rotationZ, radius, colliderY };
     });
   }, [count, xRange.join(''), yRange.join(''), zRange.join(''), scaleRange.join(''), baseRadius]);
@@ -53,7 +53,7 @@ const Rocks = ({
               type="fixed"
               position={rock.position}
             >
-              <BallCollider args={[rock.radius]} position={[0, rock.colliderY, 0]} />
+              <BallCollider args={[rock.radius]} position={[0, 0, 0]} />
               <Instance scale={rock.scale} />
             </RigidBody>
           ))}
