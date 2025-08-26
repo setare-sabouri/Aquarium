@@ -2,7 +2,7 @@ import { useGLTF } from '@react-three/drei';
 import { BallCollider, RigidBody } from '@react-three/rapier';
 import * as THREE from 'three';
 import { useMemo, useCallback } from 'react';
-import { randomInRange } from '../../Utils/Math';
+import { randomInRange,BoundingSize } from '../../Utils/Math';
 
 
 const Rocks = ({
@@ -14,13 +14,8 @@ const Rocks = ({
 }) => {
   const { scene } = useGLTF('./models/rock.glb');
 
-  const rockSize = useMemo(() => {
-    const boundingBox = new THREE.Box3().setFromObject(scene);
-    const vec = new THREE.Vector3();
-    boundingBox.getSize(vec);
-    return vec;
-  }, [scene]);
-
+  const rockSize = BoundingSize(scene)
+  
   // Generate rocks attributes
   const rocks = useMemo(() => {
     return Array.from({ length: count }).map(() => {
