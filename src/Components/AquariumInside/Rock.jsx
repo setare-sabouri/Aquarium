@@ -16,20 +16,21 @@ const Rocks = ({
   const material = materials.crabbyrock_lq;
 
   // Pre-generate rock transformations
-  const rocks = useMemo(() => {
-    return Array.from({ length: count }).map(() => {
-      const scale = randomInRange(scaleRange[0], scaleRange[1]);
-      const rotationZ = randomInRange(0, Math.PI * 2);
-      const position = [
-        randomInRange(xRange[0], xRange[1]),
-        randomInRange(yRange[0], yRange[1]),
-        randomInRange(zRange[0], zRange[1]),
-      ];
-      const radius = Math.max(...meshKeys.map(k => BoundingSize(meshes[k]).x, BoundingSize(meshes[meshKeys[0]]).y, BoundingSize(meshes[meshKeys[0]]).z)) / 2 * scale;
-      const colliderY = radius - 0.7;
-      return { position, scale, rotationZ, radius, colliderY };
-    });
-  }, [count, xRange, yRange, zRange, scaleRange, meshes, meshKeys]);
+const rocks = useMemo(() => {
+  return Array.from({ length: count }).map(() => {
+    const scale = randomInRange(scaleRange[0], scaleRange[1]);
+    const rotationZ = randomInRange(0, Math.PI * 2);
+    const position = [
+      randomInRange(xRange[0], xRange[1]),
+      randomInRange(yRange[0], yRange[1]),
+      randomInRange(zRange[0], zRange[1]),
+    ];
+    const radius = 0.5 * scale; // approximate radius if BoundingSize is expensive
+    const colliderY = radius - 0.7;
+    return { position, scale, rotationZ, radius, colliderY };
+  });
+}, [count, xRange[0], xRange[1], yRange[0], yRange[1], zRange[0], zRange[1], scaleRange[0], scaleRange[1]]);
+
 
   return (
     <>

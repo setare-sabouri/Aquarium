@@ -1,18 +1,35 @@
-import { useGLTF } from '@react-three/drei'
-import Fishes from './fishes'
-import MovingCreature from './MovingCreature'
+import { useGLTF } from '@react-three/drei';
+import Fishes from './fishes';
+import MovingCreature from './MovingCreature';
+
 
 const AquariumOutside = () => {
-  const fish = useGLTF("./models/fishes.glb")
+  const fishGltf = useGLTF("./models/fishes.glb");
+  const TurtleGltf= useGLTF("./models/turtle.glb")
+  const SharkeGltf= useGLTF("./models/shark.glb")
+
+
+  const fishPositions = [
+    [20, 1, -40],
+    [-14, 10, -70],
+    [-22, 1, -150],
+    [20, 1, -170]
+  ];
 
   return (
     <>
-      <Fishes scene={fish.scene} animations={fish.animations} position={[20, 1, -40]} />
-      <Fishes scene={fish.scene} animations={fish.animations} position={[-11, 10, -70]} />
-      <Fishes scene={fish.scene} animations={fish.animations} position={[-20, 1, -150]} />
-      <Fishes scene={fish.scene} animations={fish.animations} position={[20, 1, -200]} />
+      {fishPositions.map((pos, index) => (
+        <Fishes
+          key={index}
+          fishGltf={fishGltf}
+          animations={fishGltf.animations}
+          position={pos}
+          scale={5}
+        />
+      ))}
+
       <MovingCreature
-        modelPath="./models/turtle.glb"
+        modelGltf={TurtleGltf}
         position={[12, 4, -100]}
         rotation={[0, Math.PI, Math.PI/4]}
         scale={2}
@@ -20,8 +37,9 @@ const AquariumOutside = () => {
         turnSpeed={5}
         zRange={[-180, -20]}
       />
-        <MovingCreature
-        modelPath="./models/shark.glb"
+
+      <MovingCreature
+        modelGltf={SharkeGltf}
         position={[-13.5, 2, -10]}
         rotation={[0, Math.PI, -Math.PI/3]}
         scale={3}
@@ -30,7 +48,7 @@ const AquariumOutside = () => {
         zRange={[-180, -20]}
       />
     </>
-  )
-}
+  );
+};
 
-export default AquariumOutside
+export default AquariumOutside;

@@ -1,11 +1,12 @@
-import { useAnimations, useGLTF } from '@react-three/drei'
+import { useAnimations } from '@react-three/drei'
 import { RigidBody } from '@react-three/rapier'
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useFrame } from '@react-three/fiber'
-import { SkeletonUtils } from 'three-stdlib'
+import { useCloneScene } from '../../Utils/Scene'
+
 
 const MovingCreature = ({
-  modelPath,
+  modelGltf,
   position = [0, 0, 0],
   rotation = [0, 0, 0],
   scale = 1,
@@ -13,12 +14,10 @@ const MovingCreature = ({
   turnSpeed = 5,
   zRange = [-180, -20], 
 }) => {
-  const gltf = useGLTF(modelPath)
   const groupRef = useRef()
   const rigidRef = useRef()
-  const { actions, names } = useAnimations(gltf.animations, groupRef)
-    const clonedScene = useMemo(() => SkeletonUtils.clone(gltf.scene), [gltf.scene])
-  
+  const { actions, names } = useAnimations(modelGltf.animations, groupRef)
+  const clonedScene = useCloneScene(modelGltf)
   const [direction, setDirection] = useState(1)
   const [targetRotation, setTargetRotation] = useState(0)
 
