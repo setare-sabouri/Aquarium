@@ -44,7 +44,7 @@ const Rocks = ({
   return (
     <>
       {meshKeys.map((key) => (
-        <Insrockstances key={key} geometry={meshes[key].geometry} material={material}>
+        <Instances key={key} geometry={meshes[key].geometry} material={material}>
           {rocks.map((rock, index) => (
             <RigidBody
               key={index}
