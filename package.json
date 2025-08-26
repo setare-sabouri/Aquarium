@@ -20,7 +20,7 @@
     "sass": "^1.90.0",
     "three": "^0.179.1",
     "web-vitals": "^2.1.4",
-    "zustand": "^5.0.7"
+    "zustand": "^5.0.8"
   },
   "scripts": {
     "start": "react-scripts start",
