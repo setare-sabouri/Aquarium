@@ -14,9 +14,7 @@ const Rock = ({ position, rotationY, radius, scale, hasTreasure }) => {
 
   const onTreasureFound = () => {
     setTreasureFound(); 
-    console.log("🎉 Treasure found!");
-    console.log(TreasureFound)
-
+    console.log("Treasure found!");
   };
 
   useFrame((_, delta) => {
