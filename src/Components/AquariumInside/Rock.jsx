@@ -1,13 +1,23 @@
 import { RigidBody, BallCollider } from '@react-three/rapier';
 import { useGLTF } from '@react-three/drei';
-import { usePlayerStore } from '../../Store/useGame';
 import { useFrame } from '@react-three/fiber';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import * as THREE from 'three';
+import { usePlayerStore } from '../../Store/useGame';
+import Treasure from './Treasure';
 
-const Rock = ({ position, rotationY, radius, scale }) => {
+const Rock = ({ position, rotationY, radius, scale, hasTreasure }) => {
   const { scene } = useGLTF('./models/rock.glb');
   const rockGroupRef = useRef();
+  const TreasureFound = usePlayerStore((state) => state.TreasureFound);
+  const setTreasureFound = usePlayerStore((state) => state.setTreasureFound);
+
+  const onTreasureFound = () => {
+    setTreasureFound(); 
+    console.log("🎉 Treasure found!");
+    console.log(TreasureFound)
+
+  };
 
   useFrame((_, delta) => {
     if (!rockGroupRef.current) return;
@@ -23,11 +33,16 @@ const Rock = ({ position, rotationY, radius, scale }) => {
 
     // Target rotation and position values
     const targetRotationX = distance < threshold ? Math.PI / 2 : 0;
-    const targetOffsetY = distance < threshold ? 2 : 0; 
+    const targetOffsetY = distance < threshold ? 2 : 0;
 
     // animate to target values
-    rockGroupRef.current.rotation.x = THREE.MathUtils.lerp(rockGroupRef.current.rotation.x,targetRotationX,3 * delta);
-    rockGroupRef.current.position.y = THREE.MathUtils.lerp(rockGroupRef.current.position.y,targetOffsetY,3 * delta);
+    rockGroupRef.current.rotation.x = THREE.MathUtils.lerp(rockGroupRef.current.rotation.x, targetRotationX, 3 * delta);
+    rockGroupRef.current.position.y = THREE.MathUtils.lerp(rockGroupRef.current.position.y, targetOffsetY, 3 * delta);
+
+    // Treasure status
+    if (hasTreasure && !TreasureFound && distance < threshold) { 
+      onTreasureFound();
+    }
   });
 
   return (
@@ -40,6 +55,7 @@ const Rock = ({ position, rotationY, radius, scale }) => {
       <BallCollider args={[radius]} />
       <group ref={rockGroupRef} position={[0, 0, 0]}>
         <primitive object={scene.clone()} scale={scale} />
+        {hasTreasure && <Treasure />}
       </group>
     </RigidBody>
   );

@@ -12,9 +12,10 @@ const Rocks = ({
 }) => {
   const { scene } = useGLTF('./models/rock.glb');
   const baseRadius = useMemo(() => BoundingSize(scene).x / 2 || 0.5, [scene]);
+  const treasureIndex = useMemo(() => Math.floor(Math.random() * count), [count]);
 
   const rocks = useMemo(() =>
-    Array.from({ length: count }).map(() => {
+    Array.from({ length: count }).map((_,index) => {
       const scale = randomInRange(scaleRange[0], scaleRange[1]);
       return {
         scale,
@@ -25,9 +26,11 @@ const Rocks = ({
           randomInRange(zRange[0], zRange[1]),
         ],
         radius: baseRadius * scale,
+        hasTreasure:index===treasureIndex,
+        
       };
     }),
-  [count, xRange.join(''), yRange.join(''), zRange.join(''), scaleRange.join(''), baseRadius]);
+  [count, xRange.join(''), yRange.join(''), zRange.join(''), scaleRange.join(''), baseRadius,treasureIndex]);
 
   return (
     <>

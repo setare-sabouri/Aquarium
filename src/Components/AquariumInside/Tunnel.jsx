@@ -3,10 +3,12 @@ import { useRef, useMemo } from 'react';
 import * as THREE from 'three';
 import { useFrame, useLoader } from '@react-three/fiber';
 import { useLevaControls } from '../Globals/LevaControls';
+import { usePlayerStore } from '../../Store/useGame';
 
 const Tunnel = ({ length }) => {
   const { TunnelMaterials } = useLevaControls();
   const tunnelRef = useRef();
+  const TreasureFound = usePlayerStore((state) => state.TreasureFound);
 
   const [colorMap, dispMap, normalMap, occMap, specMap] = useLoader(THREE.TextureLoader, [
     './textures/Water/color.jpg',
@@ -16,7 +18,6 @@ const Tunnel = ({ length }) => {
     './textures/Water/SPEC.jpg',
   ]);
 
-  // Memoize texture setup
   useMemo(() => {
     [colorMap, dispMap, normalMap, occMap, specMap].forEach((map) => {
       map.wrapS = map.wrapT = THREE.RepeatWrapping;
@@ -33,16 +34,25 @@ const Tunnel = ({ length }) => {
     }
   });
 
+  const colliderEnabled = !TreasureFound; // toggle: true = collider active, false = collider off
+
   return (
     <RigidBody
+      key={colliderEnabled ? 'collider-on' : 'collider-off'} // forces remount for toggle
       position={[0, 0, -length]}
-      colliders="trimesh"
-      type="fixed"
+      colliders={colliderEnabled ? 'trimesh' : false}
+      type={colliderEnabled ? 'fixed' : 'kinematicPosition'}
       restitution={0.2}
       friction={1}
     >
-      <mesh ref={tunnelRef} rotation={[Math.PI / 2, Math.PI / 2, 0]}>
-        <cylinderGeometry args={[10, 10, length * 2 - 1, 64, 32, false, 0, Math.PI]} />
+      <mesh
+        key={TreasureFound ? 'open' : 'closed'} // geometry remount
+        ref={tunnelRef}
+        rotation={[Math.PI / 2, Math.PI / 2, 0]}
+      >
+        <cylinderGeometry
+          args={[10, 10, length * 2 - 1, 64, 32, TreasureFound, 0, Math.PI]}
+        />
         <meshStandardMaterial
           transparent
           side={THREE.BackSide}
