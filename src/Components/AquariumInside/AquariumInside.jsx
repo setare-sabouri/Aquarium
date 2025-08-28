@@ -13,12 +13,17 @@ const AquariumInside = () => {
     zRange: [-10, -195],
     scaleRange: [0.09, 0.15],
   }), []);
+    const Mesures = useMemo(() => ({
+    length:100,
+    width:10,
+
+  }), []);
 
   return (
     <>
-      <TextGlobal text="Escape" size={0.9} position={[-5,5, -30]} rotation={[0, 0.4, 0]} />
-      <Tunnel length={100} />
-      <Floor length={100} />
+      <TextGlobal text="Escape" size={0.9} position={[-5,5, -30]} rotation={[0, 0.4, 0]} /> 
+      <Tunnel length={Mesures.length} width={Mesures.width} />
+      <Floor length={Mesures.length} width={Mesures.width}/>
       <Rocks {...rockRanges} />
     </>
   );

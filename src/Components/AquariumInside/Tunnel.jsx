@@ -5,9 +5,9 @@ import { useFrame, useLoader } from '@react-three/fiber';
 import { useLevaControls } from '../Globals/LevaControls';
 import { usePlayerStore } from '../../Store/useGame';
 
-const Tunnel = ({ length }) => {
+const Tunnel = ({ length,width }) => {
 
-  // Material setup
+  // Texture Setup
   const { TunnelMaterials } = useLevaControls();
   const tunnelRef = useRef();
   const [colorMap, dispMap, normalMap, occMap, specMap] = useLoader(THREE.TextureLoader, [
@@ -18,9 +18,9 @@ const Tunnel = ({ length }) => {
     './textures/Water/SPEC.jpg',
   ]);
   useMemo(() => {
-    [colorMap, dispMap, normalMap, occMap, specMap].forEach((map) => {
-      map.wrapS = map.wrapT = THREE.RepeatWrapping;
-      map.repeat.set(TunnelMaterials.repeatX, TunnelMaterials.repeatY);
+    [colorMap, dispMap, normalMap, occMap, specMap].forEach((tex) => {
+      tex.wrapS = tex.wrapT = THREE.RepeatWrapping;
+      tex.repeat.set(TunnelMaterials.repeatX, TunnelMaterials.repeatY);
     });
   }, [TunnelMaterials.repeatX, TunnelMaterials.repeatY, colorMap, dispMap, normalMap, occMap, specMap]);
 
@@ -44,7 +44,7 @@ const Tunnel = ({ length }) => {
       type="fixed"
     >
       <mesh ref={tunnelRef} rotation={[Math.PI / 2, Math.PI / 2, 0]}>
-        <cylinderGeometry args={[10, 10, length * 2 -0.9, 64, 32, TreasureFound, 0, Math.PI]}/>
+        <cylinderGeometry args={[width, width, length * 2 -0.9, 64, 32, TreasureFound, 0, Math.PI]}/>
         <meshStandardMaterial
           transparent
           side={THREE.BackSide}
@@ -54,11 +54,12 @@ const Tunnel = ({ length }) => {
           aoMap={occMap}
           metalnessMap={specMap}
           normalScale={new THREE.Vector2(TunnelMaterials.normalScale, TunnelMaterials.normalScale)}
-          displacementScale={TunnelMaterials.displacementScale}
           color={TunnelMaterials.color}
           opacity={TunnelMaterials.opacity}
           roughness={TunnelMaterials.roughness}
           metalness={TunnelMaterials.metalness}
+          displacementScale={0.7}
+
         />
       </mesh>
     </RigidBody>
