@@ -1,11 +1,16 @@
 import { create } from "zustand";
 
 export const usePlayerStore = create((set) => ({
+  //Scene
+    length:100,
+    width:10,
+    
   // Player
   Playerposition: [0, 3, -10],
   setPlayerPosition: (pos) => set({ Playerposition: pos }),
 
   // Treasure
+  RockCount : 10,
   TreasureFound: false,
   ChosenRockId: null, 
   setTreasureFound: () => set({ TreasureFound: true }),

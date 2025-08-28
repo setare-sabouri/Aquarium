@@ -9,7 +9,7 @@ import ThirdPersonCamera from './Globals/ThirdPersonCamera.jsx';
 
 const Experience = ({ playerRef }) => {
   return (
-    <Physics debug>
+    <Physics>
       <Lights />
       <AquariumInside />
       <AquariumOutside />

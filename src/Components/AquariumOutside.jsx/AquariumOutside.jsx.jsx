@@ -60,10 +60,6 @@ const AquariumOutside = () => {
   );
 };
 
-useGLTF.preload("./models/fishes.glb");
-useGLTF.preload("./models/turtle.glb");
-useGLTF.preload("./models/shark.glb");
-
 
 export default AquariumOutside;
 
