@@ -5,7 +5,7 @@ export function useLevaControls() {
   const Scene = useControls("Scene", {
     BackGround: "dodgerblue",
     Environment: { value: "lobby", options: ["city", "apartment", "night", "dawn", "forest", "lobby", "park", "studio", "sunset", "warehouse"] },
-    Performance: true
+    Performance: false
   },
     {
       collapsed: true,
