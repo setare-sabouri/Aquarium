@@ -5,7 +5,6 @@ const TextGlobal = ({ text, size, position = [0, 0, 0], rotation = [0, 0, 0] }) 
   return (
     <group position={position} rotation={rotation}>
       <Float speed={4} rotationIntensity={2}>
-
           <Text3D
             font="./fonts/optimer_bold.typeface.json"
             size={size}
@@ -24,10 +23,11 @@ const TextGlobal = ({ text, size, position = [0, 0, 0], rotation = [0, 0, 0] }) 
               emissiveIntensity={1}
             />
           </Text3D>
-
       </Float>
     </group>
   );
 };
 
 export default TextGlobal;
+
+//checked
