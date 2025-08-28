@@ -5,7 +5,7 @@ import TextGlobal from '../Globals/TextGlobal';
 import Rocks from './Rocks';
 
 const AquariumInside = () => {
-  const textPosition = useMemo(() => [-15,5, -35], []);
+
   const rockRanges = useMemo(() => ({
     count: 10,
     xRange: [-8.5, 8.5],
@@ -16,7 +16,7 @@ const AquariumInside = () => {
 
   return (
     <>
-      <TextGlobal text="Escape the  Tunnel" size={0.9} position={textPosition} rotation={[0, 0.5, 0]} />
+      <TextGlobal text="Escape" size={0.9} position={[-5,5, -30]} rotation={[0, 0.4, 0]} />
       <Tunnel length={100} />
       <Floor length={100} />
       <Rocks {...rockRanges} />

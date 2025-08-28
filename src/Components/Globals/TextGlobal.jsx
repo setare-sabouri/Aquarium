@@ -1,14 +1,11 @@
 import { Text3D, Float } from "@react-three/drei";
-import { Center } from '@react-three/drei';
 
-
-const TextGlobal = ({ text, size, position = [0, 0, 0],rotation=[0,0,0] }) => {
-
+const TextGlobal = ({ text, size, position = [0, 0, 0], rotation = [0, 0, 0] }) => {
 
   return (
     <group position={position} rotation={rotation}>
-      <Float speed={2} rotationIntensity={2}>
-        <Center>
+      <Float speed={4} rotationIntensity={2}>
+
           <Text3D
             font="./fonts/optimer_bold.typeface.json"
             size={size}
@@ -21,9 +18,13 @@ const TextGlobal = ({ text, size, position = [0, 0, 0],rotation=[0,0,0] }) => {
             bevelSegments={5}
           >
             {text}
-            <meshToonMaterial color="#316394" />
+            <meshStandardMaterial
+              color="#63B3ED"        
+              emissive="#63B3ED"    
+              emissiveIntensity={1}
+            />
           </Text3D>
-        </Center>
+
       </Float>
     </group>
   );

@@ -23,7 +23,6 @@ function App() {
         <color args={[Scene.BackGround]} attach={"background"} />
         {Scene.Performance && <Perf position="top-left" />}
         <Experience playerRef={playerRef} />
-
       </Canvas>
 
       <Leva collapsed/>
