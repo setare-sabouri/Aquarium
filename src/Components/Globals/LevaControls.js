@@ -38,16 +38,7 @@ export function useLevaControls() {
     }
   );
 
-  const FloorMaterials = useControls("Floor", {
 
-
-  },
-    {
-      collapsed: true,
-      color: "yellow"
-    }
-  )
-
-  return { TunnelMaterials, Scene, Player, FloorMaterials }
+  return { TunnelMaterials, Scene, Player }
 
 }
