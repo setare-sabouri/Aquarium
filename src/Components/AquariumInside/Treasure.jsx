@@ -1,11 +1,9 @@
 import { Sphere, useGLTF } from '@react-three/drei';
 
 const Treasure = () => {
-  const star =useGLTF('./models/starfish.glb')
+  const Starfish =useGLTF('./models/starfish.glb')
   return (
-    <Sphere args={[0.2, 16, 16]} position={[0, 0.3, 0]}>
-      <meshStandardMaterial color="gold" />
-    </Sphere>
+    <primitive object={Starfish.scene} position={[0, 0, 0]}/>
   );
 };
 
