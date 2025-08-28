@@ -1,10 +1,9 @@
-// Diver.js
+import React from 'react';
+import * as THREE from 'three';
 import { useGLTF, useAnimations } from '@react-three/drei';
 import { CapsuleCollider, RigidBody } from '@react-three/rapier';
 import { useEffect, useRef } from 'react';
 import { useFrame } from '@react-three/fiber';
-import React from 'react';
-import * as THREE from 'three';
 
 const Diver = React.memo(({ playerRef, targetRotationY }) => {
   const { scene, animations } = useGLTF("./models/diver.glb");
@@ -15,10 +14,11 @@ const Diver = React.memo(({ playerRef, targetRotationY }) => {
     if (actions?.[names[0]]) actions[names[0]].play();
   }, [actions, names]);
 
+  // diver's rotation on backward/forward
   useFrame((_, delta) => {
     if (!groupRef.current) return;
     const currentY = groupRef.current.rotation.y;
-    groupRef.current.rotation.y = THREE.MathUtils.lerp(currentY, targetRotationY.current, 5 * delta);
+    groupRef.current.rotation.y = THREE.MathUtils.lerp(currentY, targetRotationY.current, 4 * delta);
   });
 
   return (
@@ -26,7 +26,7 @@ const Diver = React.memo(({ playerRef, targetRotationY }) => {
       ref={playerRef}
       position={[0, 3, -10]}
       rotation={[-Math.PI / 7, Math.PI, 0]}
-      gravityScale={0.2}
+      gravityScale={0.3}
       linearDamping={4}
       angularDamping={1}
       colliders={false}
@@ -39,3 +39,5 @@ const Diver = React.memo(({ playerRef, targetRotationY }) => {
 });
 
 export default Diver;
+
+//checked

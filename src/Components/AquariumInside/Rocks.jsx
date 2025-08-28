@@ -1,23 +1,28 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import { randomInRange, BoundingSize } from '../../Utils/Math';
 import { useGLTF } from '@react-three/drei';
 import Rock from './Rock';
+import { usePlayerStore } from '../../Store/useGame';
 
-const Rocks = ({
-  count = 10,
-  xRange = [-8, 8],
-  yRange = [0.5, 0.5],
-  zRange = [-50, -100],
-  scaleRange = [0.1, 0.2],
-}) => {
+const Rocks = ({ count = 10, xRange, yRange, zRange, scaleRange }) => {
   const { scene } = useGLTF('./models/rock.glb');
   const baseRadius = useMemo(() => BoundingSize(scene).x / 2 || 0.5, [scene]);
-  const treasureIndex = useMemo(() => Math.floor(Math.random() * count), [count]);
 
-  const rocks = useMemo(() =>
-    Array.from({ length: count }).map((_,index) => {
+  const resetCounter = usePlayerStore((state) => state.resetCounter);
+  const setChosenRockId = usePlayerStore((state) => state.setChosenRockId);
+
+  // Pick treasure rock only when reset
+  useEffect(() => {
+    const randomId = Math.floor(Math.random() * count);
+    setChosenRockId(randomId);
+  }, [resetCounter, count, setChosenRockId]);
+
+  // Generate rocks only when reset
+  const rocks = useMemo(() => {
+    return Array.from({ length: count }).map((_, i) => {
       const scale = randomInRange(scaleRange[0], scaleRange[1]);
       return {
+        id: i,
         scale,
         rotationY: randomInRange(0, Math.PI * 2),
         position: [
@@ -26,19 +31,22 @@ const Rocks = ({
           randomInRange(zRange[0], zRange[1]),
         ],
         radius: baseRadius * scale,
-        hasTreasure:index===treasureIndex,
-        
       };
-    }),
-  [count, xRange.join(''), yRange.join(''), zRange.join(''), scaleRange.join(''), baseRadius,treasureIndex]);
+    });
+  }, [
+    resetCounter, // only when reset
+    count,
+    baseRadius,
+    xRange[0], xRange[1],
+    yRange[0], yRange[1],
+    zRange[0], zRange[1],
+    scaleRange[0], scaleRange[1],
+  ]);
 
-  return (
-    <>
-      {rocks.map((rock, index) => (
-        <Rock key={index} {...rock} />
-      ))}
-    </>
-  );
+  return rocks.map((rock) => (
+    <Rock key={rock.id} {...rock} />
+  ));
 };
 
 export default Rocks;
+

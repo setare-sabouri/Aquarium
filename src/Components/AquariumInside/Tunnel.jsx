@@ -6,10 +6,10 @@ import { useLevaControls } from '../Globals/LevaControls';
 import { usePlayerStore } from '../../Store/useGame';
 
 const Tunnel = ({ length }) => {
+
+  // Material setup
   const { TunnelMaterials } = useLevaControls();
   const tunnelRef = useRef();
-  const TreasureFound = usePlayerStore((state) => state.TreasureFound);
-
   const [colorMap, dispMap, normalMap, occMap, specMap] = useLoader(THREE.TextureLoader, [
     './textures/Water/color.jpg',
     './textures/Water/DISP.png',
@@ -17,7 +17,6 @@ const Tunnel = ({ length }) => {
     './textures/Water/OCC.jpg',
     './textures/Water/SPEC.jpg',
   ]);
-
   useMemo(() => {
     [colorMap, dispMap, normalMap, occMap, specMap].forEach((map) => {
       map.wrapS = map.wrapT = THREE.RepeatWrapping;
@@ -28,31 +27,24 @@ const Tunnel = ({ length }) => {
   useFrame(({ clock }) => {
     if (TunnelMaterials.speed > 0 && tunnelRef.current) {
       const t = clock.elapsedTime * TunnelMaterials.speed;
-      normalMap.offset.set(t * 0.2, t * 0.6);
+      normalMap.offset.set(t * 0.2, t * 0.3);
       dispMap.offset.set(t * 0.15, t * 0.25);
       specMap.offset.set(t * 0.1, t * 0.2);
     }
   });
 
-  const colliderEnabled = !TreasureFound; // toggle: true = collider active, false = collider off
+  // open Gate when Treasure is found
+  const TreasureFound = usePlayerStore((state) => state.TreasureFound);
 
   return (
     <RigidBody
-      key={colliderEnabled ? 'collider-on' : 'collider-off'} // forces remount for toggle
+      key={TreasureFound ? 'gate-open' : 'gate-closed'} // only to force remount of collider 
       position={[0, 0, -length]}
-      colliders={colliderEnabled ? 'trimesh' : false}
-      type={colliderEnabled ? 'fixed' : 'kinematicPosition'}
-      restitution={0.2}
-      friction={1}
+      colliders='trimesh'
+      type="fixed"
     >
-      <mesh
-        key={TreasureFound ? 'open' : 'closed'} // geometry remount
-        ref={tunnelRef}
-        rotation={[Math.PI / 2, Math.PI / 2, 0]}
-      >
-        <cylinderGeometry
-          args={[10, 10, length * 2 - 1, 64, 32, TreasureFound, 0, Math.PI]}
-        />
+      <mesh ref={tunnelRef} rotation={[Math.PI / 2, Math.PI / 2, 0]}>
+        <cylinderGeometry args={[10, 10, length * 2 -0.9, 64, 32, TreasureFound, 0, Math.PI]}/>
         <meshStandardMaterial
           transparent
           side={THREE.BackSide}
@@ -74,3 +66,5 @@ const Tunnel = ({ length }) => {
 };
 
 export default Tunnel;
+
+//checked
