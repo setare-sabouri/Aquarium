@@ -25,7 +25,7 @@ const Interface = ({ playerRef }) => {
         <div className={styles.EscapeMessage}>
           <p>🤿 Treasure Found 🤿 </p>
           <p>🐬 Gate is open 🐬 </p>
-          <button onClick={handleReset}>Restart Game</button>
+          <button onClick={handleReset}>Restart</button>
         </div>
       )}
     </>
