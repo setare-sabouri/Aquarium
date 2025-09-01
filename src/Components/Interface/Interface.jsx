@@ -18,6 +18,8 @@ const Interface = ({ playerRef }) => {
     <>
       <div className={styles.Interface}>
         <p>Rotate : Hold Ctrl</p>
+        <p>Jump : Hit Space</p>
+
       </div>
       {TreasureFound && (
         <div className={styles.EscapeMessage}>

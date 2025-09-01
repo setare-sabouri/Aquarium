@@ -10,8 +10,10 @@ const Player = React.forwardRef((_, playerRef) => {
 
   const setPlayerPosition = usePlayerStore((state) => state.setPlayerPosition);
   const { Player } = useLevaControls();
-  const [, getKeys] = useKeyboardControls();
   const targetRotationY = useRef(0);
+
+  // ✅ Call inside component
+  const getKeys = useKeyboardControls((state) => state);
 
   useFrame((_, delta) => {
     if (!playerRef.current) return;
@@ -19,10 +21,8 @@ const Player = React.forwardRef((_, playerRef) => {
     // updates player position,needed elsewhere to track treasure and open rocks
     const pos = playerRef.current.translation();
     setPlayerPosition([pos.x, pos.y, pos.z]);
-
-
     // player movement
-    const { forward, backward, left, right, jump } = getKeys();
+    const { forward, backward, left, right, jump } = getKeys;
     const Impulse = { x: 0, y: 0, z: 0 };
     if (forward) { Impulse.z -= Player.speed; targetRotationY.current = 0; }
     if (backward) { Impulse.z += Player.speed; targetRotationY.current = Math.PI; }
