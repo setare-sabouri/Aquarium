@@ -3,7 +3,7 @@ import { useControls } from 'leva';
 export function useLevaControls() {
 
   const Scene = useControls("Scene", {
-    BackGround: "dodgerblue",
+    BackGround: "#0d1b2a",
     Environment: { value: "lobby", options: ["city", "apartment", "night", "dawn", "forest", "lobby", "park", "studio", "sunset", "warehouse"] },
     Performance: false
   },
@@ -23,11 +23,11 @@ export function useLevaControls() {
 
   )
   const TunnelMaterials = useControls("Tunnel", {
+    color: "#fff",
+    speed: { value: 0.09, min: 0.05, max: 0.3, step: 0.01 },
     opacity: { value: 0.4, min: 0, max: 1, step: 0.05 },
     roughness: { value: 0.5, min: 0, max: 2, step: 0.2 },
     metalness: { value: 0.5, min: 0, max: 2, step: 0.2 },
-    color: "#fff",
-    speed: { value: 0.09, min: 0.05, max: 0.3, step: 0.01 },
     normalScale: { value: 3, min: 0, max: 10, step: 1 },
     repeatX: { value: 2, min: 1, max: 10, step: 1 },
     repeatY: { value: 5, min: 1, max: 10, step: 1 },

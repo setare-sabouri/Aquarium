@@ -3,14 +3,14 @@ import { Environment as DreiEnvironment } from '@react-three/drei';
 import { useLevaControls } from './LevaControls';
 
 const Lights = memo(() => {
-const { Scene: { Environment } } = useLevaControls();
+const { Scene: { Environment,BackGround } } = useLevaControls();
 
 
   return (
     <>
       <ambientLight intensity={2} color={"#060a7e"} />
       <DreiEnvironment preset={Environment} background={false} />
-      <fog attach="fog" args={["#0d1b2a", 0.1, 45]} />
+      <fog attach="fog" args={[BackGround, 0.1, 45]} />
     </>
   );
 });
