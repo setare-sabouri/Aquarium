@@ -9,11 +9,12 @@ const AquariumOutside = () => {
   const sharkGltf = useGLTF("./models/shark.glb");
 
 
+
   // small fishes positions - crew based
   const fishPositions = useMemo(
     () => [
-      [20, 1, -40],
-      [-14, 10, -70],
+      [19, 1, -40],
+      [-19, 6, -70],
       [-22, 1, -150],
       [20, 1, -170],
       [5,13.2,-100]

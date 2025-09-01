@@ -23,7 +23,7 @@ export function useLevaControls() {
 
   )
   const TunnelMaterials = useControls("Tunnel", {
-    color: "#fff",
+    color: "#00fff5",
     speed: { value: 0.09, min: 0.05, max: 0.3, step: 0.01 },
     opacity: { value: 0.4, min: 0, max: 1, step: 0.05 },
     roughness: { value: 0.5, min: 0, max: 2, step: 0.2 },
