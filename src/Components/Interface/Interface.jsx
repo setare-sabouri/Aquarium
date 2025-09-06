@@ -17,9 +17,8 @@ const Interface = ({ playerRef }) => {
   return (
     <>
       <div className={styles.Interface}>
-        <p>Rotate : Hold Ctrl</p>
-        <p>Jump : Hit Space</p>
-
+        <p>Exit: Click esc</p>
+        <p>Jump : Click Space</p>
       </div>
       {TreasureFound && (
         <div className={styles.EscapeMessage}>

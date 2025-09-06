@@ -14,12 +14,12 @@ const AquariumInside = () => {
     scaleRange: [0.09, 0.15],
   }), []);
 
-  const {length, width} = usePlayerStore((state) => state);
+  const {length, Tunnelwidth} = usePlayerStore((state) => state);
   return (
     <>
       <TextGlobal text="Escape" size={0.9} position={[-5,5, -30]} rotation={[0, 0.4, 0]} /> 
-      <Tunnel length={length} width={width} />
-      <Floor length={length} width={width}/>
+      <Tunnel length={length} width={Tunnelwidth} />
+      <Floor length={length} width={Tunnelwidth}/>
       <Rocks {...rockRanges} />
     </>
   );

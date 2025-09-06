@@ -5,7 +5,7 @@ import { CapsuleCollider, RigidBody } from '@react-three/rapier';
 import { useEffect, useRef } from 'react';
 import { useFrame } from '@react-three/fiber';
 
-const Diver = React.memo(({ playerRef, targetRotationY }) => {
+const Diver = React.memo(({ playerRef, targetRotationY}) => {
   const { scene, animations } = useGLTF("./models/diver.glb");
   const groupRef = useRef();
   const { actions, names } = useAnimations(animations, groupRef);

@@ -3,7 +3,7 @@ import { create } from "zustand";
 export const usePlayerStore = create((set) => ({
   //Scene
     length:100,
-    width:10,
+    Tunnelwidth:10,
     
   // Player
   Playerposition: [0, 3, -10],
