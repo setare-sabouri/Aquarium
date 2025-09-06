@@ -4,54 +4,60 @@ import { useFrame } from "@react-three/fiber";
 import { useLevaControls } from '../Globals/LevaControls';
 import { usePlayerStore } from "../../Store/useGame";
 import Diver from "./Diver";
-import * as THREE from "three"
-
+import * as THREE from "three";
 
 const Player = React.forwardRef((_, playerRef) => {
-
   const setPlayerPosition = usePlayerStore((state) => state.setPlayerPosition);
   const { Player } = useLevaControls();
   const targetRotationY = useRef(0);
   const getKeys = useKeyboardControls((state) => state);
 
-
-  useFrame((state) => {
+  useFrame((state, delta) => {
     if (!playerRef.current) return;
     const { forward, backward, left, right, jump } = getKeys;
 
-    // update player position - needed for rocks
     const pos = playerRef.current.translation();
     setPlayerPosition([pos.x, pos.y, pos.z]);
 
-    // camera offset
+    // --- Camera offset ---
     const offset = new THREE.Vector3(0, 2, 7).applyQuaternion(state.camera.quaternion);
-    let camPos = new THREE.Vector3(pos.x, pos.y, pos.z).add(offset);
+    let camPos = new THREE.Vector3().addVectors(pos, offset);
 
-    // clamp camera inside tunnel - rotate limitations
+    // --- Camera limitations (clamping) ---
     camPos.x = THREE.MathUtils.clamp(camPos.x, -8, 8);
     camPos.y = THREE.MathUtils.clamp(camPos.y, -3, 10);
     camPos.z = THREE.MathUtils.clamp(camPos.z, -180, -5);
 
     state.camera.position.copy(camPos);
 
-    // rotate player to camera yaw
-    const playerDir = new THREE.Vector3();
-    state.camera.getWorldDirection(playerDir);
-    const yaw = Math.atan2(playerDir.x, playerDir.z);
+    // --- Camera-relative movement ---
+    const camDir = new THREE.Vector3();
+    state.camera.getWorldDirection(camDir);
+    camDir.y = 0;
+    camDir.normalize();
 
-    if (playerRef.current.mesh) {
-      playerRef.current.mesh.rotation.y = yaw;
-    }
+    const camRight = new THREE.Vector3();
+    camRight.crossVectors(camDir, new THREE.Vector3(0, 1, 0)).normalize();
 
-    const Impulse = { x: 0, y: 0, z: 0 };
-    if (forward) { Impulse.z -= Player.speed; targetRotationY.current = 0; }
-    if (backward) { Impulse.z += Player.speed; targetRotationY.current = Math.PI; }
-    if (left) { Impulse.x -= Player.speed; targetRotationY.current = Math.PI / 2; }
-    if (right) { Impulse.x += Player.speed; targetRotationY.current = -Math.PI / 2; }
+    const move = new THREE.Vector3();
+    if (forward) move.add(camDir);
+    if (backward) move.sub(camDir);
+    if (left) move.sub(camRight);
+    if (right) move.add(camRight);
+
+    // Apply speed without normalizing to keep diagonal speed correct
+    const Impulse = move.clone().multiplyScalar(Player.speed);
     if (jump) Impulse.y += 9;
 
-    if (Impulse.x || Impulse.y || Impulse.z) {
-      playerRef.current.applyImpulse(Impulse, true);
+    if (Impulse.lengthSq() > 0) playerRef.current.applyImpulse(Impulse, true);
+
+    // --- Diver rotation: always face back toward camera ---
+    const diverToCamera = new THREE.Vector3();
+    diverToCamera.subVectors(state.camera.position, pos); // vector from diver to camera
+    diverToCamera.y = 0;
+
+    if (diverToCamera.lengthSq() > 0) {
+      targetRotationY.current = Math.atan2(diverToCamera.x, diverToCamera.z);
     }
   });
 
@@ -59,5 +65,3 @@ const Player = React.forwardRef((_, playerRef) => {
 });
 
 export default Player;
-
-//checked

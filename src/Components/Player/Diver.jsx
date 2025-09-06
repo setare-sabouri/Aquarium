@@ -1,11 +1,10 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import * as THREE from 'three';
 import { useGLTF, useAnimations } from '@react-three/drei';
 import { CapsuleCollider, RigidBody } from '@react-three/rapier';
-import { useEffect, useRef } from 'react';
 import { useFrame } from '@react-three/fiber';
 
-const Diver = React.memo(({ playerRef, targetRotationY}) => {
+const Diver = React.memo(({ playerRef, targetRotationY }) => {
   const { scene, animations } = useGLTF("./models/diver.glb");
   const groupRef = useRef();
   const { actions, names } = useAnimations(animations, groupRef);
@@ -14,11 +13,14 @@ const Diver = React.memo(({ playerRef, targetRotationY}) => {
     if (actions?.[names[0]]) actions[names[0]].play();
   }, [actions, names]);
 
-  // diver's rotation on backward/forward
+  // Smooth rotation of diver mesh
   useFrame((_, delta) => {
     if (!groupRef.current) return;
-    const currentY = groupRef.current.rotation.y;
-    groupRef.current.rotation.y = THREE.MathUtils.lerp(currentY, targetRotationY.current, 4 * delta);
+    groupRef.current.rotation.y = THREE.MathUtils.lerp(
+      groupRef.current.rotation.y,
+      targetRotationY.current,
+      4 * delta
+    );
   });
 
   return (
@@ -30,7 +32,7 @@ const Diver = React.memo(({ playerRef, targetRotationY}) => {
       linearDamping={4}
       angularDamping={1}
       colliders={false}
-      enabledRotations={[false, false, false]}
+      enabledRotations={[false, false, false]} // prevent physics rotation
     >
       <CapsuleCollider args={[1.1, 1.1]} position={[0, 1.4, 0]} />
       <primitive object={scene} scale={0.5} ref={groupRef} />
@@ -39,5 +41,3 @@ const Diver = React.memo(({ playerRef, targetRotationY}) => {
 });
 
 export default Diver;
-
-//checked
