@@ -13,15 +13,10 @@ const Diver = React.memo(({ playerRef, targetRotationY }) => {
     if (actions?.[names[0]]) actions[names[0]].play();
   }, [actions, names]);
 
-  // Smooth rotation of diver mesh
+  // Smooth rotation of diver Y - face
   useFrame((_, delta) => {
     if (!groupRef.current) return;
-    groupRef.current.rotation.y = THREE.MathUtils.lerp(
-      groupRef.current.rotation.y,
-      targetRotationY.current,
-      4 * delta
-    );
-  });
+    groupRef.current.rotation.y = THREE.MathUtils.lerp(groupRef.current.rotation.y,targetRotationY.current,4 * delta);});
 
   return (
     <RigidBody
@@ -32,7 +27,7 @@ const Diver = React.memo(({ playerRef, targetRotationY }) => {
       linearDamping={4}
       angularDamping={1}
       colliders={false}
-      enabledRotations={[false, false, false]} // prevent physics rotation
+      enabledRotations={[false, false, false]} 
     >
       <CapsuleCollider args={[1.1, 1.1]} position={[0, 1.4, 0]} />
       <primitive object={scene} scale={0.5} ref={groupRef} />
