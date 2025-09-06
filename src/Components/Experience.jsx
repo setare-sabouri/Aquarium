@@ -1,5 +1,3 @@
-import React from 'react';
-import * as THREE from 'three';
 import { Physics } from '@react-three/rapier';
 import Lights from './Globals/Lights.jsx';
 import Player from './Player/Player';
