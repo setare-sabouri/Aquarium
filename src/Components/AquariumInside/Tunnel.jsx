@@ -8,7 +8,7 @@ import { usePlayerStore } from '../../Store/useGame';
 const Tunnel = ({ length,width }) => {
 
   // Texture Setup
-  const { TunnelMaterials } = useLevaControls();
+  const { TunnelMaterials:{repeatX,repeatY,speed,normalScale,color,opacity,roughness,metalness} } = useLevaControls();
   const tunnelRef = useRef();
   const [colorMap, dispMap, normalMap, occMap, specMap] = useLoader(THREE.TextureLoader, [
     './textures/Water/color.jpg',
@@ -20,13 +20,13 @@ const Tunnel = ({ length,width }) => {
   useMemo(() => {
     [colorMap, dispMap, normalMap, occMap, specMap].forEach((tex) => {
       tex.wrapS = tex.wrapT = THREE.RepeatWrapping;
-      tex.repeat.set(TunnelMaterials.repeatX, TunnelMaterials.repeatY);
+      tex.repeat.set(repeatX, repeatY);
     });
-  }, [TunnelMaterials.repeatX, TunnelMaterials.repeatY, colorMap, dispMap, normalMap, occMap, specMap]);
+  }, [repeatX, repeatY, colorMap, dispMap, normalMap, occMap, specMap]);
 
   useFrame(({ clock }) => {
-    if (TunnelMaterials.speed > 0 && tunnelRef.current) {
-      const t = clock.elapsedTime * TunnelMaterials.speed;
+    if (speed > 0 && tunnelRef.current) {
+      const t = clock.elapsedTime * speed;
       normalMap.offset.set(t * 0.2, t * 0.3);
       dispMap.offset.set(t * 0.15, t * 0.25);
       specMap.offset.set(t * 0.1, t * 0.2);
@@ -53,11 +53,11 @@ const Tunnel = ({ length,width }) => {
           normalMap={normalMap}
           aoMap={occMap}
           metalnessMap={specMap}
-          normalScale={new THREE.Vector2(TunnelMaterials.normalScale, TunnelMaterials.normalScale)}
-          color={TunnelMaterials.color}
-          opacity={TunnelMaterials.opacity}
-          roughness={TunnelMaterials.roughness}
-          metalness={TunnelMaterials.metalness}
+          normalScale={new THREE.Vector2(normalScale, normalScale)}
+          color={color}
+          opacity={opacity}
+          roughness={roughness}
+          metalness={metalness}
           displacementScale={0.7}
 
         />

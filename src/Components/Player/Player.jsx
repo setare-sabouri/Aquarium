@@ -8,7 +8,7 @@ import * as THREE from "three";
 
 const Player = React.forwardRef((_, playerRef) => {
   const setPlayerPosition = usePlayerStore((state) => state.setPlayerPosition);
-  const { Player } = useLevaControls();
+  const { Player:{speed} } = useLevaControls();
   const targetRotationY = useRef(0);
   const getKeys = useKeyboardControls((state) => state);
 
@@ -49,7 +49,7 @@ const Player = React.forwardRef((_, playerRef) => {
     if (right) move.add(camRight);
 
     // Apply movement
-    const Impulse = move.clone().multiplyScalar(Player.speed);
+    const Impulse = move.clone().multiplyScalar(speed);
     if (jump) Impulse.y += 9;
     if (Impulse.lengthSq() > 0) playerRef.current.applyImpulse(Impulse, true);
 

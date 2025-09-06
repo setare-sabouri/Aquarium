@@ -8,11 +8,11 @@ import Interface from './Components/Interface/Interface';
 import { useLevaControls } from './Components/Globals/LevaControls';
 import { Leva } from 'leva';
 import BackgroundAudio from './Components/Globals/Sound';
-import React, { Suspense, useRef } from 'react';
+import { Suspense, useRef } from 'react';
 import Loading from './Components/Interface/Loading/Loading';
 
 function App() {
-  const { Scene } = useLevaControls();
+  const { Scene:{BackGround,Performance} } = useLevaControls();
   const playerRef = useRef();
 
   return (
@@ -20,11 +20,11 @@ function App() {
       <Canvas shadows camera={{ fov: 45, near: 0.1, far: 2000, position: [0, 6, 20] }}>
         <Suspense fallback={
           <Html>
-            <Loading/>
+            <Loading />
           </Html>
         }>
-          <color args={[Scene.BackGround]} attach="background" />
-          {Scene.Performance && <Perf position="top-left" />}
+          <color args={[BackGround]} attach="background" />
+          {Performance && <Perf position="top-left" />}
           <Experience playerRef={playerRef} />
           <PointerLockControls selector={null} />
         </Suspense>
