@@ -1,10 +1,12 @@
 import styles from "./Interface.module.scss";
 import { usePlayerStore } from '../../Store/useGame';
+import useBreakpoint from "../../Utils/useBreakpoint";
 
 const Interface = ({ playerRef }) => {
   const TreasureFound = usePlayerStore((state) => state.TreasureFound);
   const resetStore = usePlayerStore((state) => state.resetStore);
-
+  const breakpoint = useBreakpoint()
+  
   const handleReset = () => {
     resetStore();
     if (playerRef.current) {
@@ -16,9 +18,9 @@ const Interface = ({ playerRef }) => {
 
   return (
     <>
-      <div className={styles.Interface}>
-        <p>Exit: Click esc</p>
-        <p>Jump : Click Space</p>
+      <div className={`${styles.Interface}  ${breakpoint ==='tablet'? styles.mobile : ''}`}>
+        <p>Exit: ESC</p>
+        <p>Jump : Space</p>
       </div>
       {TreasureFound && (
         <div className={styles.EscapeMessage}>
