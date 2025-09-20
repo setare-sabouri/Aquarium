@@ -10,37 +10,29 @@ import { Leva } from 'leva';
 import BackgroundAudio from './Components/Globals/Sound';
 import { Suspense, useRef } from 'react';
 import Loading from './Components/Interface/Loading/Loading';
-import RotateOverlay from './Components/Interface/orientationOverlay/OrientationOverlay';
-import useOrientation from './Utils/useOrientation';
+import DesktopOnlyOverlay from './Components/Interface/orientationOverlay/OrientationOverlay';
 import useBreakpoint from './Utils/useBreakpoint';
-import MobileControls from './Components/Interface/MobileControls/MobileControls';
+
 
 function App() {
   const { Scene: { BackGround, Performance } } = useLevaControls();
   const playerRef = useRef();
 
-  //responsivness 
+  // Mobile 
   const breakpoint = useBreakpoint()
-  const orientation = useOrientation()
-  const rotateIsNeeded = breakpoint === 'mobile' && orientation === 'portrait';
+  const KeyboardIsNeeded = breakpoint !== 'desktop' ;
 
   return (
     <>
-
       <KeyboardControls map={KeyMaps}>
-        {(breakpoint === 'mobile' || breakpoint === 'tablet') && ( <MobileControls /> )}
-        <RotateOverlay show={rotateIsNeeded} />
+        <DesktopOnlyOverlay show={KeyboardIsNeeded} />
 
         <Canvas camera={{ fov: 75, position: [0, 6, 20] }}>
-          <Suspense fallback={
-            <Html>
-              <Loading />
-            </Html>
-          }>
+          <Suspense fallback={<Html><Loading /></Html>}>
             <color args={[BackGround]} attach="background" />
             {Performance && <Perf position="top-left" />}
             <Experience playerRef={playerRef} />
-            {breakpoint === 'desktop' && <PointerLockControls selector={null} />}
+            <PointerLockControls selector={null} />
 
           </Suspense>
         </Canvas>

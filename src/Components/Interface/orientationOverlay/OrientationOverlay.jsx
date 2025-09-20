@@ -1,28 +1,31 @@
 import { motion, AnimatePresence } from "framer-motion";
 import styles from "./orientationOverlay.module.scss";
 
-export default function RotateOverlay({ show }) {
+export default function DesktopOnlyOverlay({ show }) {
   return (
-    <AnimatePresence>
+ <AnimatePresence>
       {show && (
         <motion.div
-          className={styles.rotateOverlay} 
+          className={styles.overlay}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
         >
           <motion.div
-            className={styles.rotateOverlay__icon}
-            animate={{ rotate: [0, 90, 0] }}
-            transition={{ repeat: Infinity, duration: 2 }}
+            className={styles.overlay__icon}
+            animate={{ scale: [1, 1.1, 1] }}
+            transition={{ repeat: Infinity, duration: 1.5 }}
           >
-            📱
+            ⌨️💻
           </motion.div>
-          <h2 className={styles.rotateOverlay__title}>
-            Please rotate your device
+
+          <h2 className={styles.overlay__title}>
+            Keyboard Required
           </h2>
-          <p className={styles.rotateOverlay__subtitle}>
-            For the best experience, use landscape mode.
+
+          <p className={styles.overlay__subtitle}>
+            This game requires a keyboard to play.  
+            Please use a desktop or laptop computer.
           </p>
         </motion.div>
       )}
