@@ -7,13 +7,17 @@
     bottom: 4%;
     border-radius: 2rem;
     text-align: center;
-    font-size: 1.2rem;
     padding: 0.5rem 0;
 
 }
 
+.desktop {
+    font-size: 1.5rem;
+}
+
 .mobile {
-    font-size: 0.8rem;
+    font-size: 0.7rem;
+
 }
 
 .EscapeMessage {
@@ -26,14 +30,13 @@
     text-align: center;
     padding: 1rem;
     width: 20%;
-    font-size: x-large;
 
     button {
         background-color: rgb(18, 72, 153);
-         color: black;
+        color: black;
         border-radius: 2rem;
         padding: 0.5rem;
     }
 
-    
+
 }

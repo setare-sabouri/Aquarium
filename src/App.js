@@ -31,7 +31,7 @@ function App() {
         {(breakpoint === 'mobile' || breakpoint === 'tablet') && ( <MobileControls /> )}
         <RotateOverlay show={rotateIsNeeded} />
 
-        <Canvas shadows camera={{ fov: 45, near: 0.1, far: 2000, position: [0, 6, 20] }}>
+        <Canvas camera={{ fov: 75, position: [0, 6, 20] }}>
           <Suspense fallback={
             <Html>
               <Loading />

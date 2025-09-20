@@ -18,12 +18,12 @@ const Interface = ({ playerRef }) => {
 
   return (
     <>
-      <div className={`${styles.Interface}  ${breakpoint ==='tablet'? styles.mobile : ''}`}>
+      <div className={`${styles.Interface}  ${breakpoint ==='desktop'? styles.desktop : styles.mobile}`}>
         <p>Exit: ESC</p>
         <p>Jump : Space</p>
       </div>
       {TreasureFound && (
-        <div className={styles.EscapeMessage}>
+        <div className={`${styles.EscapeMessage} ${breakpoint==='desktop'? styles.desktop : styles.mobile}`}>
           <p>🤿 Treasure Found 🤿 </p>
           <p>🐬 Gate is open 🐬 </p>
           <button onClick={handleReset}>Restart</button>
