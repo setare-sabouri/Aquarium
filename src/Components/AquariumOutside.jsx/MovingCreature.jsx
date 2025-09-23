@@ -1,4 +1,4 @@
-import { useAnimations } from '@react-three/drei'
+import { Clone, useAnimations } from '@react-three/drei'
 import { useEffect, useRef } from 'react'
 import { useFrame } from '@react-three/fiber'
 import { useCloneScene } from '../../Utils/Scene'
@@ -13,7 +13,7 @@ const MovingCreature = ({
   zRange = [-180, -20],
 }) => {
   const groupRef = useRef()
-  const directionRef = useRef(1) 
+  const directionRef = useRef(1)
   const targetRotationRef = useRef([rotation[1], rotation[2]])
 
   // Model animation
@@ -60,7 +60,9 @@ const MovingCreature = ({
       rotation={rotation}
       scale={scale}
     >
-      <primitive object={clonedScene} />
+
+      <Clone object={clonedScene} />
+
     </group>
   )
 }
