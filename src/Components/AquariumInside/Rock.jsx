@@ -1,5 +1,5 @@
 import { RigidBody, BallCollider } from '@react-three/rapier';
-import { useGLTF } from '@react-three/drei';
+import { Clone } from '@react-three/drei';
 import { useFrame } from '@react-three/fiber';
 import { useRef } from 'react';
 import * as THREE from 'three';
@@ -51,7 +51,7 @@ const Rock = ({ position, rotationY, radius, scale, id,scene }) => {
     >
       <BallCollider args={[radius]} />
       <group ref={rockGroupRef} >
-        <primitive object={scene.clone()} scale={scale} />
+        <Clone object={scene} scale={scale} />
         {hasTreasure && <Treasure />}
       </group>
     </RigidBody>

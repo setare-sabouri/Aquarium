@@ -30,7 +30,9 @@ function App() {
         <Canvas camera={{ fov: 75, position: [0, 6, 20] }}>
           <Suspense fallback={<Html><Loading /></Html>}>
             <color args={[BackGround]} attach="background" />
+            {/* {true && <Perf position="top-left" />} */}
             {Performance && <Perf position="top-left" />}
+
             <Experience playerRef={playerRef} />
             <PointerLockControls selector={null} />
 
