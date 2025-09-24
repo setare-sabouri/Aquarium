@@ -51,8 +51,8 @@ const Rock = ({ position, rotationY, radius, scale, id,scene }) => {
     >
       <BallCollider args={[radius]} />
       <group ref={rockGroupRef} >
-        <Clone object={scene} scale={scale} />
-        {hasTreasure && <Treasure />}
+        <Clone object={scene} scale={scale} inject={hasTreasure && <Treasure/>} />
+        {/* {hasTreasure && <Treasure />} */}
       </group>
     </RigidBody>
   );
